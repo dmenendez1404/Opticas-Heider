@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link href="{% static 'js/plugins/data-tables/css/jquery.dataTables.min.css' %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+{% endblock %}
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">VENTAS</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="active">Ventas</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+3
+        <div id="table-datatables">
+            <div class="row">
+                <div class="col s12">
+                    <table id="data-table-ventas" class="responsive-table display" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Fecha</th>
+                            <th>Sucursal</th>
+                            <th>Cliente</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>        {# boton de añadir #}
+        <div>
+            <a id="new" class="btn-floating btn-large red modal-trigger" href="#myModal" type="button"><i
+                    class="large mdi-content-add"></i></a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/js/jquery.dataTables.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/data-tables-script.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+    <script>
+        table = $("#data-table-ventas").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/venta/",
+                "type": "GET",
+            },
+            "columns": [
+                {"data": "id"},
+                {"data": "fecha"},
+                {"data": "sucursal.nombre"},
+                {
+                    "data": function (row, type, val, meta) {
+                        return row.cliente.usuario.first_name + " " + row.cliente.usuario.last_name;
+                    }
+                },
+                {"data": "total"},
+            ]
+        });
+    </script>
+{% endblock %}

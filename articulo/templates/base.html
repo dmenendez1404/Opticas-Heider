@@ -1,0 +1,476 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!--================================================================================
+	Item Name: Base
+	Version: 2.1
+	Author: Los FUNDIOS
+	================================================================================ -->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description"
+          content="Heider Opticas Alemanas es un local con amplia experiencia en el sector. Le ofrecemos una mirada mas nítida de la vida. ">
+    <meta name="keywords" content="opticas, armaduras, opticas Alemanas, lente, optica uruguay,">
+    <title>Heider | Opticas Alemanas</title>
+
+    <!-- Favicons-->
+    <link rel="icon" href="{% static "images/favicon/favicon-32x32.png" %}" sizes="32x32">
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="{% static "images/favicon/apple-touch-icon-152x152.png" %}">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="{% static "images/favicon/mstile-144x144.png" %}">
+    <!-- For Windows Phone -->
+
+
+    <!-- CORE CSS-->
+
+    <link href="{% static "css/materialize.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static "css/materialize.min.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static "css/style.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->
+    <link href="{% static "css/custom-style.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- CSS style Horizontal Nav (Layout 03)-->
+    <link href="{% static "css/style-horizontal.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="{% static "css/prism.css" %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static "js/plugins/perfect-scrollbar/perfect-scrollbar.css" %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+    <link href="{% static "js/plugins/chartist-js/chartist.min.css" %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+
+    {% block stylesheet %}
+
+    {% endblock %}
+</head>
+
+<body>
+<!-- Start Page Loading -->
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<!-- End Page Loading -->
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<!-- START HEADER -->
+<header id="header" class="page-topbar">
+    <!-- start header nav-->
+    <div class="navbar-fixed">
+        <nav class="teal darken-2">
+            <div class="nav-wrapper">
+
+                <ul class="left">
+                    <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img
+                            src="{% static 'images/materialize-logo.png' %}" alt="materialize logo"></a> <span class="logo-text">Heider-Opticas Alemanas</span>
+                    </h1></li>
+                </ul>
+
+                <div class="header-search-wrapper hide-on-med-and-down">
+                    <i class="mdi-action-search"></i>
+                    <input type="text" name="Search" class="header-search-input z-depth-2 "
+                           placeholder="Explore nuestras opticas">
+                </div>
+
+                <ul class="right">
+                    <div class="right hide-on-med-and-down">
+                        <li><a href="javascript:void(0);"
+                               class="waves-effect waves-block waves-light toggle-fullscreen"><i
+                                class="mdi-action-settings-overscan"></i></a>
+                        </li>
+
+                        <li><a href="#" data-activates="chat-out"
+                               class="waves-effect waves-block waves-light chat-collapse"><i
+                                class="mdi-action-account-circle"></i></a>
+                        </li>
+                    </div>
+                </ul>
+
+            </div>
+        </nav>
+        <!-- HORIZONTL NAV START-->
+        <nav id="horizontal-nav" class="white hide-on-med-and-down">
+            <div class="nav-wrapper">
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li>
+                        <a href="index.html" class="teal-text darken-1">
+                            <i class="mdi-action-assessment"></i>
+                            <span>Análisis</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'almacen' %}" class="teal-text darken-1">
+                            <i class="mdi-maps-store-mall-directory"></i>
+                            <span>Almacén</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-menu teal-text darken-1" href="{% url 'compras' %}" data-activates="CSSdropdown">
+                            <i class="mdi-action-shopping-cart"></i>
+                            <span>Compras<i class="mdi-navigation-arrow-drop-down right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-menu teal-text darken-1" href="{% url 'ventas' %}" data-activates="UIElementsdropdown">
+                            <i class="mdi-editor-attach-money"></i>
+                            <span>Ventas<i class="mdi-navigation-arrow-drop-down right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="app-widget.html" class="teal-text darken-1">
+                            <i class="mdi-action-visibility"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-menu teal-text darken-1" href="{% url 'proveedores' %}" data-activates="Tablesdropdown">
+                            <i class="mdi-maps-local-mall"></i>
+                            <span>Proveedores<i class="mdi-navigation-arrow-drop-down right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-menu teal-text darken-1" href="{% url 'recetas' %}" data-activates="Formsdropdown">
+                            <i class="mdi-action-description"></i>
+                            <span>Recetas<i class="mdi-navigation-arrow-drop-down right"></i></span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a class="dropdown-menu teal-text darken-1" href="#!" data-activates="Pagesdropdown">
+                            <i class="mdi-social-group"></i>
+                            <span>Usuarios<i class="mdi-navigation-arrow-drop-down right"></i></span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- CSSdropdown -->
+        <ul id="CSSdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="{% url 'addCompra' %}" class="cyan-text">Comprar</a></li>
+        </ul>
+
+        <!-- Ventasdropdown-->
+        <ul id="UIElementsdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="{% url 'addVentas' %}" class="cyan-text">Vender</a></li>
+        </ul>
+
+        <!-- Tablesdropdown -->
+        <ul id="Tablesdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="table-basic.html" class="cyan-text">Basic Tables</a></li>
+            <li><a href="table-data.html" class="cyan-text">Data Tables</a></li>
+        </ul>
+
+        <!-- RecetasDropdown -->
+        <ul id="Formsdropdown" class="dropdown-content dropdown-horizontal-list">
+
+        </ul>
+
+        <!-- Pagesdropdown -->
+        <ul id="Pagesdropdown" class="dropdown-content dropdown-horizontal-list">
+
+            <li><a href="page-invoice.html" class="cyan-text">Invoice</a></li>
+            <li><a href="page-404.html" class="cyan-text">404</a></li>
+            <li><a href="page-500.html" class="cyan-text">500</a></li>
+            <li><a href="page-blank.html" class="cyan-text">Blank</a></li>
+        </ul>
+
+        <!-- eCommers -->
+        <ul id="eCommersdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="eCommerce-products-page.html" class="cyan-text">eCommerce Products </a></li>
+            <li><a href="eCommerce-pricing.html" class="cyan-text">Pricing Page</a></li>
+            <li><a href="eCommerce-invoice.html" class="cyan-text">Invoice</a></li>
+        </ul>
+
+        <!-- Mediasdropdown -->
+        <ul id="Mediasdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="media-gallary-page.html" class="cyan-text">Gallary Page</a></li>
+            <li><a href="media-hover-effects.html" class="cyan-text">Image Hover Effects</a></li>
+        </ul>
+
+        <!-- Usersdropdown -->
+        <ul id="Usersdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="user-profile-page.html" class="cyan-text">User Profile</a></li>
+            <li><a href="user-login.html" class="cyan-text">Login</a></li>
+            <li><a href="user-register.html" class="cyan-text">Register</a></li>
+            <li><a href="user-forgot-password.html" class="cyan-text">Forgot Password</a></li>
+            <li><a href="user-lock-screen.html" class="cyan-text">Lock Screen</a></li>
+            <li><a href="user-sesssion-timeout.html" class="cyan-text">Session Timeout</a></li>
+        </ul>
+
+        <!-- Chartsdropdown -->
+        <ul id="Chartsdropdown" class="dropdown-content dropdown-horizontal-list">
+            <li><a href="charts-chartjs.html" class="cyan-text">Chart JS</a></li>
+            <li><a href="charts-chartist.html" class="cyan-text">Chartist</a></li>
+            <li><a href="charts-morris.html" class="cyan-text">Morris Charts</a></li>
+            <li><a href="charts-xcharts.html" class="cyan-text">xCharts</a></li>
+            <li><a href="charts-flotcharts.html" class="cyan-text">Flot Charts</a></li>
+            <li><a href="charts-sparklines.html" class="cyan-text">Sparkline Charts</a></li>
+        </ul>
+        <!-- HORIZONTL NAV END-->
+    </div>
+    <!-- end header nav-->
+</header>
+<!-- END HEADER -->
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<!-- START CONTENT -->
+<section id="content">
+
+    <!--breadcrumbs start-->
+    <div id="breadcrumbs-wrapper" class=" grey lighten-2">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m12 l12">
+                {% block Cabecera %}
+                {% endblock %}
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        {% block breadcrumbs %}
+
+                        {% endblock %}
+{% comment %}
+                       <li><a href="#">Ejemplo</a></li>
+                       <li class="active">Base Ejemplo</li>
+{% endcomment %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--breadcrumbs end-->
+
+
+    <!--start container-->
+    <div class="container" >
+        <div class="section" >
+            {% block content %}
+
+            {% endblock %}
+        </div>
+
+    </div>
+    <!--end container-->
+</section>
+<!-- END CONTENT -->
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START RIGHT SIDEBAR NAV-->
+<aside id="right-sidebar-nav">
+    <ul id="chat-out" class="side-nav rightside-navigation">
+        <li class="li-hover">
+            <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
+            <div id="right-search" class="row">
+                <form class="col s12">
+                    <div class="input-field">
+                        <i class="mdi-action-search prefix"></i>
+                        <input id="icon_prefix" type="text" class="validate">
+                        <label for="icon_prefix">Search</label>
+                    </div>
+                </form>
+            </div>
+        </li>
+        <li class="li-hover">
+            <ul class="chat-collapsible" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent
+                        Activity
+                    </div>
+                    <div class="collapsible-body recent-activity">
+                        <div class="recent-activity-list chat-out-list row">
+                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
+                            </div>
+                            <div class="col s9 recent-activity-list-text">
+                                <a href="#">just now</a>
+                                <p>Jim Doe Purchased new equipments for zonal office.</p>
+                            </div>
+                        </div>
+                        <div class="recent-activity-list chat-out-list row">
+                            <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
+                            </div>
+                            <div class="col s9 recent-activity-list-text">
+                                <a href="#">Yesterday</a>
+                                <p>Your Next flight for USA will be on 15th August 2015.</p>
+                            </div>
+                        </div>
+                        <div class="recent-activity-list chat-out-list row">
+                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                            </div>
+                            <div class="col s9 recent-activity-list-text">
+                                <a href="#">5 Days Ago</a>
+                                <p>Natalya Parker Send you a voice mail for next conference.</p>
+                            </div>
+                        </div>
+                        <div class="recent-activity-list chat-out-list row">
+                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
+                            </div>
+                            <div class="col s9 recent-activity-list-text">
+                                <a href="#">Last Week</a>
+                                <p>Jessy Jay open a new store at S.G Road.</p>
+                            </div>
+                        </div>
+                        <div class="recent-activity-list chat-out-list row">
+                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                            </div>
+                            <div class="col s9 recent-activity-list-text">
+                                <a href="#">5 Days Ago</a>
+                                <p>Natalya Parker Send you a voice mail for next conference.</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales
+                        Repoart
+                    </div>
+                    <div class="collapsible-body sales-repoart">
+                        <div class="sales-repoart-list  chat-out-list row">
+                            <div class="col s8">Target Salse</div>
+                            <div class="col s4"><span id="sales-line-1"></span>
+                            </div>
+                        </div>
+                        <div class="sales-repoart-list chat-out-list row">
+                            <div class="col s8">Payment Due</div>
+                            <div class="col s4"><span id="sales-bar-1"></span>
+                            </div>
+                        </div>
+                        <div class="sales-repoart-list chat-out-list row">
+                            <div class="col s8">Total Delivery</div>
+                            <div class="col s4"><span id="sales-line-2"></span>
+                            </div>
+                        </div>
+                        <div class="sales-repoart-list chat-out-list row">
+                            <div class="col s8">Total Progress</div>
+                            <div class="col s4"><span id="sales-bar-2"></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% comment %}<li>
+                    <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates
+                    </div>
+                    <div class="collapsible-body favorite-associates">
+                        <div class="favorite-associate-list chat-out-list row">
+                            <div class="col s4"><img src="images/avatar.jpg" alt=""
+                                                     class="circle responsive-img online-user valign profile-image">
+                            </div>
+                            <div class="col s8">
+                                <p>Eileen Sideways</p>
+                                <p class="place">Los Angeles, CA</p>
+                            </div>
+                        </div>
+                        <div class="favorite-associate-list chat-out-list row">
+                            <div class="col s4"><img src="images/avatar.jpg" alt=""
+                                                     class="circle responsive-img online-user valign profile-image">
+                            </div>
+                            <div class="col s8">
+                                <p>Zaham Sindil</p>
+                                <p class="place">San Francisco, CA</p>
+                            </div>
+                        </div>
+                        <div class="favorite-associate-list chat-out-list row">
+                            <div class="col s4"><img src="images/avatar.jpg" alt=""
+                                                     class="circle responsive-img offline-user valign profile-image">
+                            </div>
+                            <div class="col s8">
+                                <p>Renov Leongal</p>
+                                <p class="place">Cebu City, Philippines</p>
+                            </div>
+                        </div>
+                        <div class="favorite-associate-list chat-out-list row">
+                            <div class="col s4"><img src="images/avatar.jpg" alt=""
+                                                     class="circle responsive-img online-user valign profile-image">
+                            </div>
+                            <div class="col s8">
+                                <p>Weno Carasbong</p>
+                                <p>Tokyo, Japan</p>
+                            </div>
+                        </div>
+                        <div class="favorite-associate-list chat-out-list row">
+                            <div class="col s4"><img src="images/avatar.jpg" alt=""
+                                                     class="circle responsive-img offline-user valign profile-image">
+                            </div>
+                            <div class="col s8">
+                                <p>Nusja Nawancali</p>
+                                <p class="place">Bangkok, Thailand</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>{% endcomment %}
+            </ul>
+        </li>
+    </ul>
+</aside>
+<!-- LEFT RIGHT SIDEBAR NAV-->
+
+</div>
+<!-- END WRAPPER -->
+
+</div>
+<!-- END MAIN -->
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<!-- START FOOTER -->
+<footer class="page-footer ">
+    <div class="footer-copyright teal darken-4">
+        <div class="container">
+            <span>Copyright © 2018 <a class="grey-text text-lighten-4" href="http://opticas-alemanas.com.uy"
+                                      target="_blank">Heider-Opticas Alemanas</a> All rights reserved.</span>
+            <span class="right"> Design and Developed by <a class="grey-text text-lighten-4"
+                                                            href="http://losfundios.com/">Los Fundios</a></span>
+        </div>
+    </div>
+</footer>
+<!-- END FOOTER -->
+
+
+<!-- ================================================
+Scripts
+================================================ -->
+
+<!-- jQuery Library -->
+<script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
+<!--materialize js-->
+<script type="text/javascript" src="{% static "js/materialize/dist/js/materialize.js" %}"></script>
+<!--prism-->
+<script type="text/javascript" src="{% static "js/prism.js" %}"></script>
+<!--scrollbar-->
+<script type="text/javascript" src="{% static "js/plugins/perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+<!-- chartist -->
+<script type="text/javascript" src="{% static "js/plugins/chartist-js/chartist.min.js" %}"></script>
+
+<!-- chartjs -->
+<script type="text/javascript" src="{% static "js/plugins/chartjs/chart.min.js" %}"></script>
+<!--<script type="text/javascript" src="{% static "js/plugins/chartjs/chart-script.js" %}"></script>-->
+<!-- data-tables -->
+<script type="text/javascript" src="{% static "js/DjangoAjax.js" %}"></script>
+
+<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+<script type="text/javascript" src="{% static "js/plugins.js" %}"></script>
+
+<!--Plugin para los mensajes de modal-->
+<script type="text/javascript" src="{% static "js/plugins/sweetalert2/dist/sweetalert2.js" %}"></script>
+
+{% block javascripts %}
+
+{% endblock %}
+
+</body>
+
+</html>

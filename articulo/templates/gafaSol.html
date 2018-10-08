@@ -1,0 +1,860 @@
+<div id="table-datatables">
+    <div class="row">
+        <div class="col s12">
+            <table id="data-table-gafaSol" class="responsive-table data-table-simple display" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Sucursal</th>
+                    <th>Material Arm</th>
+                    <th>Material Sol</th>
+                    <th>Tipo Arm</th>
+                    <th>Tipo Montura</th>
+                    <th>Color</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--MODAL NEW and EDIT Modal Gafa Sol-->
+<div id="ModalEditGafa" class="modal card-panel modal-fixed-footer" style="width: 90%">
+    <div class="modal-content">
+        <h4 class="modal-title center-align">Editar Accesorio</h4>
+        <form id="form-edit-gafaSol" role="form">
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s6 m6">
+                        <br>
+                        <label for="nombreGafa">Nombre</label>
+                        <input type="text" class="form-control" id="nombreGafa" name="nombre"
+                               placeholder="Escriba el nombre de la gafa de sol"
+                               required="true">
+                        <input type="hidden" class="form-control" id="codigoGafa" name="codigo"
+                               required="true">
+                    </div>
+                    <div class="col s6 m6">
+                        <div class="col s10">
+                            <label for="sucursalGafa">Sucursal</label>
+                            <select id="sucursalGafa" name="sucursal">
+                            </select>
+                        </div>
+                        <div class="col s2" id="sucursal-gafa-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-gafa"
+                               href="#addSucursalGafa">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-gafa"
+                               href="#addSucursalGafa">
+                                <i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="tipomontGafa">Tipo de Montura</label>
+                        <select id="tipomontGafa" name="tipo_montura">
+                        </select>
+                    </div>
+                    <div class="col s2" id="tipo-montura-gafa-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" href="#addTipoMonturaGafa" type="button"
+                           name="update-tipo-montura">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" href="#addTipoMonturaGafa" type="button"
+                           name="add-tipo-montura"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="tipoarmGafa">Tipo de Armadura</label>
+                        <select id="tipoarmGafa" name="tipo_armazon">
+                        </select>
+                    </div>
+                    <div class="col s2" id="tipo-armadura-gafa-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="update-tipo-armadura" href="#addtipoArmGafa">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="add-tipo-armadura"
+                           href="#addtipoArmGafa"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="marcaGafa">Marca</label>
+                        <select id="marcaGafa" name="marca">
+                        </select>
+                    </div>
+                    <div class="col s2" id="marca-gafa-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="update-marca" href="#addMarcaGafa">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="add-marca"
+                           href="#addMarcaGafa"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4 m4">
+                    <br>
+                    <label for="precioGafa">Precio</label>
+                    <input type="number" class="form-control" id="precioGafa" name="precio"
+                           placeholder="Escriba el precio de la Gafa de Sol"
+                           required="true">
+                </div>
+                <div class="col s4 m4">
+
+                    <div class="col s10">
+                        <label for="MaterialSol">Material Sol</label>
+                        <select id="MaterialSol" name="material_sol">
+                        </select>
+                    </div>
+                    <div class="col s2" id="material-sol-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="update-material-sol" href="#addMaterialSol">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="add-material-sol"
+                           href="#addMaterialSol"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+                  <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="colorGafa">Color</label>
+                        <select id="colorGafa" name="color">
+                        </select>
+                    </div>
+                    <div class="col s2" id="color-gafa-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="update-color" href="#addColorGafa">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                           name="add-color"
+                           href="#addColorGafa"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="descripcionGafa" name="descripcion" class="materialize-textarea"></textarea>
+                    <label for="descripcionGafa">Descripcion</label>
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-Gafa" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Delete Gafa Sol -->
+<div class="modal" id="deleteGafa">
+    <div class="modal-content">
+        <h4 class="modal-title">Seguro desea eliminar</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat " id="delete">Eliminar</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat ">Cancelar</a>
+    </div>
+</div>
+
+<!--MODAL Add Sucursal Gafa Sol  -->
+<div id="addSucursalGafa" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir nueva Sucursal</h4>
+        <form id="form-sucursal-gafa">
+            <div class="form-group">
+                <label for="nombre-sucursal-gafa"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-sucursal-gafa" name="nombre"
+                       placeholder="Escriba el nombre de la sucursal"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="direccion-sucursal-gafa"><span class="glyphicon glyphicon-pencil"></span>
+                        Direccion</label>
+                    <input type="text" class="form-control" id="direccion-sucursal-gafa" name="direccion"
+                           placeholder="Escriba la direccion de la sucursal"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-sucursal-gafa" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add tipo Montura Gafa Sol -->
+<div id="addTipoMonturaGafa" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir un nuevo tipo de montura</h4>
+        <form id="form-tipo-montura-gafa">
+            <div class="form-group">
+                <label for="nombre-montura-gafa"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-montura-gafa" name="nombre"
+                       placeholder="Escriba el tipo de montura que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-montura-gafa"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripción</label>
+                    <input type="text" class="form-control" id="descripcion-montura-gafa" name="descripcion"
+                           placeholder="Escriba la descripción del tipo de montura"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-tipomont-gafa" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add Tipo Armazon -->
+<div id="addtipoArmGafa" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir un nuevo tipo de armazon</h4>
+        <form id="form-tipo-armadura-gafa">
+            <div class="form-group">
+                <label for="nombre-armadura-gafa"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-armadura-gafa" name="nombre"
+                       placeholder="Escriba el nombre del tipo de armazon"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-armadura-gafa"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion-armadura-gafa" name="descripcion"
+                           placeholder="Escriba la descripcion del tipo de armazon"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-tipoarm-gafa" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add Marca -->
+<div id="addMarcaGafa" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir una nueva Marca</h4>
+        <form id="form-marca-gafa">
+            <div class="form-group">
+                <label for="nombre-marca-gafa"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-marca-gafa" name="nombre"
+                       placeholder="Escriba la marca que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-marca-gafa"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripción</label>
+                    <input type="text" class="form-control" id="descripcion-marca-gafa" name="descripcion"
+                           placeholder="Escriba la descripción de la Marca"
+                           required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="siglas-marca-gafa"><span class="glyphicon glyphicon-pencil"></span> Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-marca-gafa" name="siglas"
+                           placeholder="Escriba las siglas de la Marca"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type" name="type-marca-gafa" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add Color -->
+<div id="addColorGafa" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir un nuevo Color</h4>
+        <form id="form-color-gafa">
+            <div class="form-group">
+                <label for="nombre-color-gafa"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-color-gafa" name="nombre"
+                       placeholder="Escriba el color que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="siglas-color-gafa"><span class="glyphicon glyphicon-pencil"></span> Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-color-gafa" name="siglas"
+                           placeholder="Escriba las siglas del color"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type" name="type-color-gafa" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add Material Sol  -->
+<div id="addMaterialSol" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir nuevo material de sol</h4>
+        <form id="form-material-sol">
+            <div class="form-group">
+                <label for="nombre-material-sol"><span class="glyphicon glyphicon-pencil"></span> Nombre del
+                    Material</label>
+                <input type="text" class="form-control" id="nombre-material-sol" name="material"
+                       placeholder="Escriba el nombre del material"
+                       required="true">
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-material-sol" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        id = 0;
+        table = $("#data-table-gafaSol").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/gafasol/",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "codigo"},
+                {"data": "nombre"},
+                {"data": "sucursal.nombre"},
+                {"data": "material_armadura.nombre"},
+                {"data": "material_sol.material"},
+                {"data": "tipo_armazon.nombre"},
+                {"data": "tipo_montura.nombre"},
+                {"data": "color.nombre"},
+                {"data": "marca.siglas"},
+                {"data": "precio"},
+                {"data": "cantidad"},
+                {
+                    "data": null,
+                    "defaultContent": '<a href="#ModalEditGafa" name="update-gafa" class="modal-trigger"><i class="mdi-content-create"></i></a>'
+                    + '&nbsp;&nbsp' +
+                    '<a href="#deleteGafa" name="delete-gafa" class="modal-trigger"><i class="mdi-action-delete"></i></a>'
+                }
+            ]
+        });
+
+        $('#data-table-gafaSol tbody').on('click', 'a', function () {
+            data = table.row($(this).parents('tr')).data();
+            name = $(this).attr('name');
+            $('.modal').modal();
+            id = 0;
+
+            if (name == 'update-gafa') {
+                // EDIT button
+                Materialize.updateTextFields();
+                $('#nombreGafa').val(data['nombre']);
+                $('#codigoGafa').val(data['codigo']);
+
+                initSucursalGafa(data['sucursal'].id);
+                initTipoMontGafa(data['tipo_montura'].id);
+                initTipoArmGafa(data['tipo_armazon'].id);
+                initMarcaGafa(data['marca'].id);
+                initColorGafa(data['color'].id);
+                initMaterialSol(data['material_sol'].id);
+
+                $('#precioGafa').val(data['precio']);
+
+                $('#descripcionGafa').val(data['descripcion']);
+                $('#activoGafa').val(data['activo']);
+
+
+                $('#type').val('edit');
+                $('.modal-title').text('Editar ' + data['codigo']);
+
+            } else {
+                // DELETE button
+                $('.modal-title').text('Eliminar ' + data['codigo']);
+            }
+            id = data['id'];
+        });
+
+        $('#form-edit-gafaSol').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-Gafa').val();
+            method = '';
+            url = '/api/gafasol/';
+            if (type == 'new') {
+                // new
+                method = 'POST';
+            } else {
+                // edit
+                url = url + id + '/';
+                method = 'PUT';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize()
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#confirm').on('click', '#delete', function (e) {
+            $.ajax({
+                url: '/api/gafasol/' + id + '/',
+                method: 'PUT',
+                data: {'activo': 'False'}
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        function initSucursalGafa(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/sucursales",
+            }).done(function (data) {
+                $('.option-sucursal-gafa').remove();
+                $.each(data.results, function (k, v) {
+                    $('#sucursalGafa').append($('<option>', {
+                        class: 'option-sucursal-gafa',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#sucursalGafa').material_select('destroy');
+                $('#sucursalGafa').val(val).change();
+                $('#sucursalGafa').material_select();
+
+            });
+        }
+
+        function initTipoMontGafa(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/tipomontura",
+            }).done(function (data) {
+                $('.option-tipo-montura-gafa').remove();
+                $.each(data.results, function (k, v) {
+                    $('#tipomontGafa').append($('<option>', {
+                        class: 'option-tipo-montura-gafa',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#tipomontGafa').material_select('destroy');
+                $('#tipomontGafa').val(val).change();
+                $('#tipomontGafa').material_select();
+            });
+        }
+
+        function initTipoArmGafa(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/tipoarmadura",
+            }).done(function (data) {
+                $('.option-tipo-armazon-gafa').remove();
+                $.each(data.results, function (k, v) {
+                    $('#tipoarmGafa').append($('<option>', {
+                        class: 'option-tipo-armazon-gafa',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#tipoarmGafa').material_select('destroy');
+                $('#tipoarmGafa').val(val).change();
+                $('#tipoarmGafa').material_select();
+            });
+        }
+
+        function initMarcaGafa(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/marca",
+            }).done(function (data) {
+                $('.option-marca-gafa').remove();
+                $.each(data.results, function (k, v) {
+                    $('#marcaGafa').append($('<option>', {
+                        class: 'option-marca-gafa',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#marcaGafa').material_select('destroy');
+                $('#marcaGafa').val(val).change();
+                $('#marcaGafa').material_select();
+            });
+        }
+
+        function initColorGafa(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/colores",
+            }).done(function (data) {
+                $('.option-color-gafa').remove();
+                $.each(data.results, function (k, v) {
+                    $('#colorGafa').append($('<option>', {
+                        class: 'option-color-gafa',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#colorGafa').material_select('destroy');
+                $('#colorGafa').val(val).change();
+                $('#colorGafa').material_select();
+            });
+        }
+
+        function initMaterialSol(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/materialsol",
+            }).done(function (data) {
+                $('.option-material-sol').remove();
+                $.each(data.results, function (k, v) {
+                    $('#MaterialSol').append($('<option>', {
+                        class: 'option-material-sol',
+                        value: v.id,
+                        text: v.material
+                    }));
+                });
+                $('#MaterialSol').material_select('destroy');
+                $('#MaterialSol').val(val).change();
+                $('#MaterialSol').material_select();
+            });
+        }
+
+
+        <!--  SCRIPT SUCURSAL  -->
+        $('#sucursal-gafa-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-sucursal') {
+                $('#type-sucursal-gafa').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/sucursales/" + $("#sucursalGafa").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-sucursal-gafa').val(data.nombre);
+                    $('#direccion-sucursal-gafa').val(data.direccion);
+                });
+            }
+            else {
+                $('#nombre-sucursal-gafa').val("");
+                $('#direccion-sucursal-gafa').val("");
+            }
+        });
+
+        $('#form-sucursal-gafa').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-sucursal-gafa').val();
+            method = 'POST';
+            url = '/api/sucursales/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/sucursales/' + $('#sucursalGafa').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initSucursalGafa(data['id']);
+                $('#addSucursalGafa').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        <!--  SCRIPT Tipo Montura  -->
+        $('#tipo-montura-gafa-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-tipo-montura') {
+                $('#type-tipomont-gafa').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tipomontura/" + $("#tipomontGafa").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-montura-gafa').val(data.nombre);
+                    $('#descripcion-montura-gafa').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-montura-gafa').val("");
+                $('#descripcion-montura-gafa').val("");
+            }
+        });
+
+        $('#form-tipo-montura-gafa').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-tipomont-gafa').val();
+            method = 'POST';
+            url = '/api/tipomontura/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/tipomontura/' + $('#tipomontGafa').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initTipoMontGafa(data['id']);
+                $('#addtipomonturagafa').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+        <!--  SCRIPT Tipo Armadura  -->
+        $('#tipo-armadura-gafa-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-tipo-armadura') {
+                $('#type-tipoarm-gafa').val('edit');
+                {#                     alert("tipoarmazon " + $("#tipoarmGafa").val());#}
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tipoarmadura/" + $("#tipoarmGafa").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-armadura-gafa').val(data.nombre);
+                    $('#descripcion-armadura-gafa').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-armadura-gafa').val("");
+                $('#descripcion-armadura-gafa').val("");
+            }
+        });
+
+        $('#form-tipo-armadura-gafa').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-tipoarm-gafa').val();
+            method = 'POST';
+            url = '/api/tipoarmadura/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/tipoarmadura/' + $('#tipoarmGafa').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initTipoArmGafa(data['id']);
+                $('#addtipoarmgafa').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+        <!--  SCRIPT MARCA  -->
+        $('#marca-gafa-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-marca') {
+                $('#type-marca-gafa').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/marca/" + $("#marcaGafa").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-marca-gafa').val(data.nombre);
+                    $('#siglas-marca-gafa').val(data.siglas);
+                    $('#descripcion-marca-gafa').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-marca-gafa').val("");
+                $('#siglas-marca-gafa').val("");
+                $('#descripcion-marca-gafa').val("");
+            }
+        });
+
+        $('#form-marca-gafa').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-marca-gafa').val();
+            method = 'POST';
+            url = '/api/marca/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/marca/' + $('#marcaGafa').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMarcaGafa(data['id']);
+                $('#addmarcagafa').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+        <!--  SCRIPT Color  -->
+        $('#color-gafa-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-color') {
+                $('#type-color-gafa').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/colores/" + $("#colorGafa").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-color-gafa').val(data.nombre);
+                    $('#siglas-color-gafa').val(data.siglas);
+                });
+            }
+            else {
+                $('#nombre-color-gafa').val("");
+                $('#siglas-color-gafa').val("");
+
+            }
+        });
+
+        $('#form-color-gafa').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-color-gafa').val();
+            method = 'POST';
+            url = '/api/color/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/colores/' + $('#colorGafa').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initColorGafa(data['id']);
+                $('#addcolorgafa').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        <!--  SCRIPT Material Sol  -->
+        $('#material-sol-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-material-sol') {
+                $('#type-material-sol').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/materialsol/" + $("#MaterialSol").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-material-sol').val(data.material);
+                });
+            }
+            else {
+                $('#nombre-material-sol').val("");
+            }
+        });
+
+        $('#form-material-sol').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-material-sol').val();
+            method = 'POST';
+            url = '/api/materialsol/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/materialsol/' + $('#MaterialSol').val() + '/';
+            }
+{#            alert("metodo "+method);#}
+{#            alert("$('#type-material-sol').val()= "+type);#}
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMaterialSol(data['id']);
+                $('#addmaterialsol').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+    })
+    ;
+</script>

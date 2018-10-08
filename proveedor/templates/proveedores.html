@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link href="{% static 'js/plugins/data-tables/css/jquery.dataTables.min.css' %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+
+{% endblock %}
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">Proveedores</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="active">Proveedores</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+        <ul class="collection with-header" id="proveedores-list">
+            <li class="collection-header">
+                <h4>PROVEEDORES</h4>
+            </li>
+        </ul>
+    </div>
+    <!-- Delete Proveedor -->
+    <div class="modal" id="confirm">
+        <div class="modal-content">
+            <h4 id="delete-tittle" class="modal-title"></h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat "
+               id="delete">Eliminar</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat ">Cancelar</a>
+        </div>
+    </div>
+
+    <!-- Edit or Add Proveedor -->
+    <div id="proveedor-modal" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s1">
+                    <img src="" id="perfil" alt="" style="height:80px; width:80px" class="circle">
+                </div>
+                <div class="col s11">
+                     <h4 id="proveedor-title" class="modal-title center-align"></h4>
+                </div>
+            </div>
+            <form id="form-edit-proveedor" role="form">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="nombreProveedor">Nombre</label>
+                            <input type="text" class="form-control" id="nombreProveedor" name="nombre"
+                                   placeholder="Escriba el nombre del Proveedor"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="apellidos">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos"
+                                   placeholder="Escriba sus apellidos"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4 rigth">
+                            <div class="col s10">
+                                <label for="sucursal">Sucursal</label>
+                                <select id="sucursal" name="sucursal">
+                                    <option value="" disabled selected>Seleccione una Sucursal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="precio">CI</label>
+                            <input type="number" class="form-control" id="CI" name="CI"
+                                   placeholder="Escriba el CI"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="esfera">Telefono</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono"
+                                   placeholder="Escriba el telefono"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="Escriba el email"
+                                   required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s6 m6">
+                            <label for="fecha">Fecha Nacimiento</label>
+                            <br><br>
+                            <input type="text" name="fecha_nacimiento" id="fecha" class="datepicker" required="true">
+                        </div>
+                        <div class="col s6 m6">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Foto</span>
+                                    <input name="foto" type="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" id="foto" placeholder="Añade una foto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <label for="articulos">Articulos</label>
+                        <div class="chips chips-initial chips-autocomplete" id="articulos" name="articulos"></div>
+                        <select multiple hidden=true id="SelectArticulos" name="articulos">
+                        </select>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                            <textarea id="direccion" name="direccion"
+                                      class="materialize-textarea"></textarea>
+                        <label for="direccion">Dirección</label>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="modal-footer">
+                    <input type="hidden" id="activo" name="activo" value="True">
+                    <input type="hidden" id="type-proveedor" value="">
+                    <button type="submit" class="btn btn-flat teal modal-action modal-close" href="!#"><span
+                            class="glyphicon glyphicon-ok"></span> Aceptar
+                    </button>
+                    <button type="button" onclick="return clearModal()" class="btn btn-flat teal modal-close"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="fixed-action-btn">
+        <a id="new" class="btn-floating btn-large red modal-trigger" href="#proveedor-modal" type="button"><i
+                class="large mdi-content-add"></i></a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- proveedores-list -->
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+    <script>
+
+        id = null;
+        $('.modal').modal();
+        document.addEventListener("DOMContentLoaded", function () {
+            loadCollection();
+        });
+        function loadCollection() {
+            $('.item').remove();
+            $.ajax({
+                url: '/api/proveedor/?activo=True',
+                type: 'GET',
+            }).success(function (data, textStatus, jqXHR) {
+                $.each(data.data, function (k, v) {
+                    $('#proveedores-list').append(
+                        "<li id='" + v.id + "' class='item'>" +
+                        "<div class='card' style='height:120px'>" +
+                        "<div class='row'>" +
+                        "<div class='col s12'>" +
+                        "<div class='col s1'>" +
+                        "<br><img src='" + v.foto + "' alt='' style='height:80px; width:80px' class='circle'>" +
+                        "</div>" +
+                        "<div class='col s9'>" +
+                        "<span class='title' ><h5><strong>" + v.nombre + " " + v.apellidos + "</strong></h5></span>" +
+                        "<p><strong>Dirección:</strong> " + v.direccion + " <br><strong>Teléfono:</strong>" + v.telefono + "</p>" +
+                        "</div>" +
+                        "<div  class='col s2 item-action'>" +
+                        "<br><br><a href='#confirm' id='delete-proveedor' data-target='" + v.id + "' class='secondary-content modal-trigger'>" +
+                        "<i class='mdi-action-delete'></i></a>" +
+                        "<a href='#proveedor-modal' id='edit-proveedor' data-target='" + v.id + "' class='secondary-content modal-trigger'>" +
+                        "<i class='mdi-content-create'></i></a>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</li>");
+                });
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        }
+
+        $('#proveedores-list').on('click', '#delete-proveedor', function (e) {
+            console.log('entre');
+            id = $(this).attr('data-target');
+            name = $('#' + id + ' .title').text();
+            console.log(name);
+            $('#delete-tittle').text('Desea eliminar al Proveedor ' + name + '?');
+        });
+
+        $('#confirm').on('click', '#delete', function (e) {
+            $.ajax({
+                url: '/api/proveedor/' + id + '/',
+                method: 'PUT',
+                data: {'activo': 'False'}
+            }).success(function (data, textStatus, jqXHR) {
+                loadCollection();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#proveedores-list').on('click', '#delete-proveedor', function (e) {
+            id = $(this).attr('data-target');
+            name = $('#' + id + ' .title').text();
+            console.log(name);
+            $('#delete-tittle').text('Desea eliminar al Proveedor ' + name + '?');
+        });
+
+        $('#proveedores-list').on('click', '#edit-proveedor', function (e) {
+            id = $(this).attr('data-target');
+            name = $('#' + id + ' .title').text();
+            $('#proveedor-title').text('Proveedor ' + name);
+            $('#type-proveedor').val('edit');
+            $.ajax({
+                url: '/api/proveedor/' + id + '/',
+                method: 'GET'
+            }).success(function (data, textStatus, jqXHR) {
+                $('#nombreProveedor').val(data['nombre']);
+                $('#apellidos').val(data['apellidos']);
+                initSucursal(data['sucursal'].id);
+                $('#telefono').val(data['telefono']);
+                $('#fecha').val(data['fecha_nacimiento']);
+                $('#CI').val(data['CI']);
+                $('#email').val(data['email']);
+                $('#direccion').val(data['direccion']);
+                $('#foto').val('');
+                $('#perfil').removeAttr('hidden');
+                $('#perfil').attr('src', data['foto'])
+                loadArticulos(data['articulos']);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#new').on('click', function (e) {
+            $('#type-proveedor').val('new');
+            clearModal();
+        });
+
+        $('#form-edit-proveedor').submit(function (e) {
+            e.preventDefault();
+            type = $('#type-proveedor').val();
+            console.log($('#form-edit-proveedor').serialize());
+            method = 'POST';
+            url = '/api/proveedor/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url += id + '/';
+            }
+            $.ajax({
+                url: url,
+                contentType: false,
+                processData: false,
+                type: method,
+                data: new FormData(this),
+            }).success(function (data, textStatus, jqXHR) {
+                loadCollection();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+
+        function loadArticulos(articulos) {
+            var myConvertedData = {};
+            var myConvertedData2 = [];
+            $('.option-articulos').remove();
+            $.each(articulos, function (index, value) {
+                myConvertedData2[index] =
+                    {
+                        tag: value.codigo,
+                        id: value.id
+                    };
+                $('#SelectArticulos').append('<option selected class="option-articulos" value="' + value.id + '"></option>');
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/api/articulo",
+            }).done(function (data) {
+                $.each(data.results, function (index, value) {
+                    myConvertedData[value.codigo + " "] = null;
+                });
+                $('.chips-autocomplete').material_chip({
+                    autocompleteOptions: {
+                        data: myConvertedData,
+                        minLength: 0
+                    },
+                    data: myConvertedData2
+                });
+
+                $('.chips').on('chip.add', function (e, chip) {
+                    // you have the added chip here
+                    $.each(data.results, function (index, value) {
+                        if (chip.tag == value.codigo) {
+                            chip.id = value.id;
+                            $('#SelectArticulos').append('<option selected class="option-articulos" value="' + value.id + '"></option>')
+                        }
+                    });
+                    var data1 = $('.chips-autocomplete').material_chip('data');
+                    if (chip.id == undefined) {
+                        data1.splice(data1.length - 1, 1);
+                    }
+                    $('.chips-autocomplete').material_chip({
+                        data: data1,
+                        autocompleteOptions: {
+                            data: myConvertedData,
+                            minLength: 0
+                        }
+                    });
+
+                    //console.log(data1);
+                });
+                $('.chips').on('chip.delete', function (e, chip) {
+                    // you have the added chip here
+                    $('option.option-articulos[value="' + chip.id + '"]').remove();
+                });
+            });
+        }
+        function clearModal() {
+            $('#nombreProveedor').val("");
+            $('#apellidos').val("");
+            $('#nombreProveedor').val("");
+            $('#telefono').val("");
+            $('#fecha').val("");
+            $('#CI').val("");
+            $('#email').val("");
+            $('#direccion').val("");
+            initSucursal();
+            loadArticulos();
+            $('#foto').val('');
+            $('#perfil').attr('src','');
+        }
+    </script>
+{% endblock %}

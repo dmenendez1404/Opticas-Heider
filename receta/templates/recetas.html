@@ -1,0 +1,1423 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link href="{% static 'js/plugins/data-tables/css/jquery.dataTables.min.css' %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+
+{% endblock %}
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">Recetas</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="active">Recetas</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+
+        <div id="table-datatables">
+            <div class="row">
+                <div class="col s12">
+                    <table id="data-table-recetas" class="responsive-table display" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Fecha</th>
+                            <th>Sucursal</th>
+                            <th>Cliente</th>
+                            <th>Doctor</th>
+                            <th>Lente Cerca</th>
+                            <th>Lente Lejos</th>
+                            <th>Lente Contacto</th>
+                            <th>Atendida</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                {# boton de añadir #}
+                <div>
+                    <a id="new" class="btn-floating btn-large red modal-trigger" href="#myModal" type="button"><i
+                            class="large mdi-content-add"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- EDIT Modal RECETA -->
+        <div id="myModal" class="modal card-panel modal-fixed-footer" style="width: 90%">
+            <div class="modal-content">
+                <h4 id="receta-title" class="center-align">Editar Receta</h4>
+
+                <form id="form-edit-recetas" role="form">
+                    <div class="row">
+                        <div class="col s12 m12">
+                            <div class="col s6 m6 left">
+                                <div class="col s12">
+                                    <label for="fecha">Fecha</label>
+                                    <br><br>
+                                    <input type="text" name="fecha" id="fecha" class="datepicker" required="true">
+                                </div>
+                            </div>
+                            <div class="col s6 m6 rigth">
+                                <div class="col s10">
+                                    <label for="sucursal">Sucursal</label>
+                                    <select id="sucursal" name="sucursal">
+                                        <option value="" disabled selected>Seleccione una Sucursal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6 m6 left">
+                            <div class="col s12">
+                                <label for="cliente">Cliente</label>
+                                <select id="cliente" name="cliente">
+                                    <option value="" disabled selected>Seleccione un Cliente</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s6 m6 right">
+                            <div class="col s12">
+                                <label for="doctor">Doctor</label>
+                                <select id="doctor" name="doctor">
+                                    <option value="" disabled selected>Seleccione un Doctor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s4 m4 left">
+                            <div class="col s8">
+                                <br>
+                                <label for="lente_cerca"><span class="glyphicon glyphicon-pencil"></span> Lente
+                                    Cerca</label>
+                                <div class="input-field col s12">
+                                    <input type="text" id="lente_cerca_autocomplete_input" class="autocomplete">
+                                    <input type="hidden" id="lente_cerca" name="lente_cerca">
+                                </div>
+                            </div>
+                            <div class="col s4" id="lente-cerca-div">
+                                <br><br>
+                                <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                                   name="update-lente-cerca" href="#addLente">
+                                    <i class="mdi-editor-mode-edit"></i></a>
+                                {#                                <a class="btn-floating teal darken-2 modal-trigger" type="button"#}
+                                {#                                   name="add-lente-cerca"#}
+                                {#                                   href="#addLente"><i#}
+                                {#                                        class="mdi-content-add"></i></a>#}
+                            </div>
+                        </div>
+                        <div class="col s4 m4">
+                            <div class="col s8">
+                                <br>
+                                <label for="lente_lejos"><span class="glyphicon glyphicon-pencil"></span> Lente
+                                    Lejos</label>
+                                <div class="input-field col s12">
+                                    <input type="text" id="lente_lejos_autocomplete_input" class="autocomplete">
+                                    <input type="hidden" id="lente_lejos" name="lente_lejos">
+                                </div>
+                            </div>
+                            <div class="col s4" id="lente-lejos-div">
+                                <br><br>
+                                <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                                   name="update-lente-lejos" href="#addLente">
+                                    <i class="mdi-editor-mode-edit"></i></a>
+                                {#                                <a class="btn-floating teal darken-2 modal-trigger" type="button"#}
+                                {#                                   name="add-lente-lejos"#}
+                                {#                                   href="#addLente"><i#}
+                                {#                                        class="mdi-content-add"></i></a>#}
+                            </div>
+                        </div>
+                        <div class="col s4 m4 align-right">
+                            <div class="col s8">
+                                <br>
+                                <label for="lente_contacto"><span class="glyphicon glyphicon-pencil"></span> Lente
+                                    Contacto</label>
+                                <div class="autocomplete" id="lente_contacto_autocomplete">
+                                    <input type="text" id="lente_contacto_input" class="autocomplete">
+                                    <input type="hidden" id="lente_contacto" name="lente_contacto" class="autocomplete">
+                                </div>
+                            </div>
+                            <div class="col s4" id="lente_cotacto-div">
+                                <br><br>
+                                <a class="btn-floating teal darken-2 modal-trigger" href="#addLenteContacto"
+                                   type="button"
+                                   name="update-lente-cotacto">
+                                    <i class="mdi-editor-mode-edit"></i></a>
+                                {#                                <a class="btn-floating teal darken-2 modal-trigger" href="#addLenteContacto"#}
+                                {#                                   type="button"#}
+                                {#                                   name="add-lente-contacto"><i#}
+                                {#                                        class="mdi-content-add"></i></a>#}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 m6 left">
+                            <br>
+                            <label for="numero">Número de Receta</label>
+                            <input type="text" class="form-control" id="numero" name="numero"
+                                   placeholder="numero de receta"
+                                   required="true">
+                        </div>
+                        <div class="col s6 m6 right">
+                            <br><br><br>
+                            <div class="col s12">
+                                <input type="checkbox" name="atendida" value=true id="atendida"/>
+                                <label for="atendida">Atendida</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="type-receta" name="type" value="">
+                        <button href="#!" type="submit" class="btn btn-flat text-white teal modal-action modal-close"><i
+                                class="mdi-content-send"></i> Aceptar
+                        </button>
+                        <button type="button" class="btn btn-flat teal text-white modal-close left"><i
+                                class="mdi-content-clear"></i> Cancelar
+                        </button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </form>
+            </div>
+
+        </div>
+
+
+        <!-- Delete Receta -->
+        <div class="modal" id="confirm">
+            <div class="modal-content">
+                <h4 id="delete-receta" class="modal-title"></h4>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat "
+                   id="delete">Eliminar</a>
+                <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat ">Cancelar</a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Add Lente -->
+    <div id="addLente" class="modal card-panel modal-fixed-footer" style="width: 90%">
+        <div class="modal-content">
+            <h4 id="lente-title" class="modal-title center-align">Editar lente</h4>
+            <form id="form-edit-lente" role="form">
+
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s6 m6">
+                            <label for="Nombre"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                            <input type="text" disabled="disabled" class="form-control" id="nombre" name="nombre"
+                                   placeholder="Escriba el nombre del lente"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="codigo" name="codigo"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="sucursal-lente" name="sucursal"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="activo" name="activo"
+                                   value="false">
+                            <input type="hidden" class="form-control" id="pendiente" name="pendiente"
+                                   value="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6 m6 left">
+                        <div class="col s10">
+                            <label for="marca">Marca</label>
+                            <select disabled="disabled" id="marca" name="marca">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 right">
+                        <div class="col s10">
+                            <label for="tipo_armazon">tipo de Armazon</label>
+                            <select disabled="disabled" id="tipo_armazon" name="tipo_armazon">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4 m4 left">
+                        <div class="col s8">
+                            <label for="material_armadura"><span class="glyphicon glyphicon-pencil"></span> Material
+                                Armadura</label>
+                            <select disabled="disabled" id="material_armadura" name="material_armadura">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col s4 m4">
+                        <div class="col s8">
+                            <label for="tipo_montura"><span class="glyphicon glyphicon-pencil"></span> Tipo de
+                                Montura</label>
+                            <select disabled="disabled" id="tipo_montura" name="tipo_montura">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col s4 m4 align-right">
+                        <div class="col s8">
+                            <label for="colorLente">Color</label>
+                            <select disabled="disabled" id="colorLente" name="color">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4 m4 left">
+                        <div class="col s12">
+                            <label for="calibre"><span class="glyphicon glyphicon-pencil"></span>
+                                calibre</label>
+                            <input type="number" disabled="disabled" class="form-control" id="calibre" name="calibre"
+                                   placeholder="Escriba el calibre de la armadura"
+                                   required="true">
+                        </div>
+                        <div class="col">
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="col s4 m4 ">
+                        <div class="col s12">
+                            <label for="puente"><span class="glyphicon glyphicon-pencil"></span>
+                                puente</label>
+                            <input type="number" disabled="disabled" class="form-control" id="puente" name="puente"
+                                   placeholder="Escriba el puente de la armadura"
+                                   required="true">
+                        </div>
+                        <div class="col s12">
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="col s4 m4 ">
+                        <div class="col s12">
+                            <label for="precio"><span class="glyphicon glyphicon-pencil"></span>
+                                precio</label>
+                            <input type="number" disabled="disabled" class="form-control" id="precio" name="precio"
+                                   placeholder="Escriba el precio"
+                                   required="true">
+                        </div>
+                        <div class="col s12">
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s6 left">
+                        <div class="col s10">
+                            <label for="cristalIzq">Cristal Izquierdo</label>
+                            <select id="cristalIzq" name="cristalIzq">
+                                <option value="" disabled selected>Añada un Cristal</option>
+                            </select>
+                        </div>
+                        <div class="col s2" id="cristal-izq-div">
+                            <br><br>
+                            <input type="hidden" id="cristal-lado" name="type" value="">
+                            <input type="hidden" id="type-cristal" name="type" value="">
+                            <a class="btn-floating teal darken-2 modal-trigger" name="update-cristal-izq"
+                               href="#addCristal" type="button"> <i class="mdi-content-create"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" name="add-cristal-izq"
+                               href="#addCristal" type="button"><i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                    <div class="col s6 right">
+                        <div class="col s10">
+                            <label for="cristalDer">Cristal Derecho</label>
+                            <select id="cristalDer" name="cristalDer">
+                                <option value="" disabled selected>Añada un Cristal</option>
+                            </select>
+
+                        </div>
+                        <div class="col s2" id="cristal-der-div">
+                            <br><br>
+                            <input type="hidden" id="cristal-lado" name="type" value="">
+                            <input type="hidden" id="type-cristal" name="type" value="">
+                            <a class="btn-floating teal darken-2 modal-trigger" name="update-cristal-der"
+                               href="#addCristal"> <i class="mdi-content-create"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" name="add-cristal-der"
+                               href="#addCristal"><i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 left">
+                        <div class="input-field col s12">
+                            <textarea id="descripcion" disabled="disabled" name="descripcion"
+                                      class="materialize-textarea"></textarea>
+                            <label for="descripcion">Descripcion</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="type-lente" value="">
+                    <input type="hidden" id="dist-lente" value="">
+                    <button type="submit" class="btn btn-flat text-white teal modal-action modal-close rigth"><span
+                            class="mdi-content-send"></span> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal text-white modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {#modal del cristal#}
+    <div id="addCristal" class="modal card-panel modal-fixed-footer" style="width: 90%">
+        <div class="modal-content">
+            <h4 id="cristal-title" class="modal-title center-align">Añadir Cristal Graduado</h4>
+            <form id="form-edit-cristal" role="form">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="nombreCristal">Nombre</label>
+                            <input type="text" class="form-control" id="nombreCristal" name="nombre"
+                                   placeholder="Escriba el nombre del cristal"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="codigoCristal" name="codigo"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="activoCristal" name="activo"
+                                   required="true" value="false">
+                            <input type="hidden" class="form-control" id="sucursal-cristal" name="sucursal"
+                                   required="true">
+                            <input type="hidden" class="form-control" id="activo" name="activo"
+                                   value="false">
+                            <input type="hidden" class="form-control" id="pendiente" name="pendiente"
+                                   value="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <div class="col s10">
+                                <label for="colorCristal">Color</label>
+                                <select id="colorCristal" name="color">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="precio">Precio</label>
+                            <input type="number" class="form-control" id="precioCristal" name="precio"
+                                   placeholder="Escriba el precio del Cristal"
+                                   required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4 m4 left">
+                        <div class="col s12">
+                            <label for="tratamientos">Tratamientos</label>
+                            <div class="chips chips-initial chips-autocomplete" id="tratamientos">
+                                <select multiple type="hidden" id="SelectTratamientos" name="tratamientos">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s4 m4">
+                        <div class="col s10">
+                            <label for="modeloCristal">Modelo</label>
+                            <select id="modeloCristal" name="modelo">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col s4 m4 right">
+                        <div class="col s10">
+                            <label for="materialCristal">Material del Cristal</label>
+                            <select id="materialCristal" name="material_cristal">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4 m4 left">
+                        <input type="checkbox" id="laboratorioCristal" class="teal" name="laboratorio" value=true>
+                        <label for="laboratorioCristal">Laboratorio</label>
+                    </div>
+                    <div class="col s4 m4 left">
+                        <div class="col s10">
+                            <label for="medicion_cerca">Medición Cerca</label>
+                            <select id="medicion_cerca" name="medicion_cerca">
+                            </select>
+                        </div>
+                        <div class="col s2" id="medicion-cerca-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                               name="update-medicion-cerca"
+                               href="#addMedicion">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-medicion-cerca"
+                               href="#addMedicion">
+                                <i class="mdi-content-add"></i></a>
+                        </div>
+
+                    </div>
+
+                    <div class="col s4 m4 left">
+                        <div class="col s10">
+                            <label for="medicion_lejos">Medición Lejos</label>
+                            <select id="medicion_lejos" name="medicion_lejos">
+                            </select>
+                        </div>
+                        <div class="col s2" id="medicion-lejos-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                               name="update-medicion-lejos"
+                               href="#addMedicion">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-medicion-lejos"
+                               href="#addMedicion">
+                                <i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="descripcionCristal" name="descripcion"
+                                      class="materialize-textarea"></textarea>
+                            <label for="descripcionCristal">Descripcion</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="modal-footer">
+                            <input type="hidden" id="type-cristal" name="type" value="">
+                            <button type="submit" class="btn btn-flat teal text-white modal-action modal-close"
+                                    href="!#"><span
+                                    class="glyphicon glyphicon-ok"></span> Aceptar
+                            </button>
+                            <button type="button" class="btn btn-flat teal text-white modal-close left"><i
+                                    class="mdi-content-clear"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- NEW and EDIT Medicion -->
+    <div id="addMedicion" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4 id="medicion-title" class="modal-title center-align">Editar Medicion</h4>
+            <form id="form-edit-medicion" role="form">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="esfera">Esfera</label>
+                            <input type="number" class="form-control" id="esfera" name="esfera"
+                                   placeholder="Escriba el valor de la esfera"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="cilindro">Cilindro</label>
+                            <input type="number" class="form-control" id="cilindro" name="cilindro"
+                                   placeholder="Escriba el valor del cilindro"
+                                   required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="esfera">Eje</label>
+                            <input type="number" class="form-control" id="eje" name="eje"
+                                   placeholder="Escriba el valor del eje"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="prisma">Prisma</label>
+                            <input type="number" class="form-control" id="prisma" name="prisma"
+                                   placeholder="Escriba el valor del prisma"
+                                   required="true">
+                        </div>
+                        <div class="col s4 m4">
+                            <br>
+                            <label for="altura">Altura</label>
+                            <input type="number" class="form-control" id="altura" name="altura"
+                                   placeholder="Escriba el valor de la altura"
+                                   required="true">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="modal-footer">
+                    <input type="hidden" id="distancia-medicion" name="type" value="">
+                    <input type="hidden" id="type-medicion" name="type" value="">
+                    <button type="submit" class="btn btn-flat teal modal-action modal-close" href="!#"><span
+                            class="glyphicon glyphicon-ok"></span> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal modal-close"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- data-tables -->
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/js/jquery.dataTables.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/data-tables-script.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+    <script>
+        $('.modal').modal();
+
+        table = $("#data-table-recetas").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/receta/",
+                "type": "GET",
+            },
+            "columns": [
+                {"data": "numero"},
+                {"data": "fecha"},
+                {"data": "sucursal.nombre"},
+                {
+                    "data": function (row, type, val, meta) {
+                        return row.cliente.usuario.first_name + " " + row.cliente.usuario.last_name;
+                    }
+                },
+                {
+                    "data": function (row, type, val, meta) {
+                        return row.doctor.usuario.first_name + " " + row.doctor.usuario.last_name;
+                    }
+                },
+                {
+                    "data": "lente_cerca.nombre",
+                    "defaultContent": "<i class='teal-text text-darken-2'>No asignado</i>"
+                },
+                {
+                    "data": "lente_lejos.nombre",
+                    "defaultContent": "<i class='teal-text text-darken-2'>No asignado</i>"
+                },
+                {
+                    "data": "lente_contacto.nombre",
+                    "defaultContent": "<i class='teal-text text-darken-2'>No asignado</i>"
+                },
+                {
+                    "data": function (row, type, val, meta) {
+                        if (row.atendida)
+                            return '<i class="mdi-action-done"></i>';
+                        return " ";
+                    }
+                },
+                {
+                    "data": function (row, type, val, meta) {
+                        return '<a href="#myModal" name="update" class="modal-trigger"><i class="mdi-content-create"></i></a>'
+                            + '&nbsp;&nbsp' + '<a href="#confirm" name="delete" class="modal-trigger"><i class="mdi-action-delete"></i></a>'
+                            + '&nbsp;&nbsp' + '<a href="/recetas/pdf/?id=' + row.id + '" name="pdf" ><i class="mdi-file-file-download"></i></a>';
+                    }
+                },
+            ]
+        });
+        cerca = true;
+        idLenteCerca = null;
+        idCristalIzquierdoLenteCerca = null;
+        idCristalDerechoLenteCerca = null;
+        idLenteLejos = null;
+        idCristalIzquierdoLenteLejos = null;
+        idCristalDerechoLenteLejos = null;
+        idLenteContacto = null;
+        id = null;
+
+        $('#data-table-recetas tbody').on('click', 'a', function () {
+            data = table.row($(this).parents('tr')).data();
+            name = $(this).attr('name');
+
+            if (name == 'update') {
+                // EDIT button
+                Materialize.updateTextFields();
+                $('#numero').val(data['numero']);
+                $('#fecha').val(data['fecha']);
+                $('#type-receta').val('edit');
+                $('#atendida').prop('checked', data['atendida']);
+                initSucursal(data['sucursal'].id);
+                initDoctor(data['doctor'].id);
+                initCliente(data['cliente'].id);
+                loadLentesCerca(data['lente_cerca']);
+                loadLentesLejos(data['lente_lejos']);
+                $('#receta-title').text('Editar la receta: ' + data['numero']);
+
+            } else {
+                // DELETE button
+                $('#delete-receta').text('Eliminar la receta' + data['numero']);
+            }
+            id = data['id'];
+        });
+
+        $('#form-edit-recetas').on('submit', function (e) {
+            e.preventDefault();
+            type = $('#type-receta').val();
+            method = 'POST';
+            url_receta = '/api/receta/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url_receta += id + '/';
+            }
+            if (!idLenteCerca & $('#lente_cerca').val() != '')
+                postLente('cerca');
+
+            if (!idLenteLejos & $('#lente_lejos').val() != '')
+                postLente('lejos');
+
+            $.ajax({
+                url: url_receta,
+                type: method,
+                async: false,
+                data: $('#form-edit-recetas').serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+                idLenteCerca = null;
+                lockLenteForm();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        function postLente(dist) {
+            unlockLenteForm();
+            if (dist == 'cerca')
+                id = $('#lente_cerca').val()
+            else
+                id = $('#lente_lejos').val()
+            $.ajax({
+                type: "GET",
+                url: '/api/lentes/' + id + '/',
+                async: false,
+            }).done(function (data) {
+                $.ajax({
+                    url: '/api/lentes/',
+                    type: 'POST',
+                    async: false,
+                    data: {
+                        'nombre': data.nombre,
+                        'pendiente': 'True',
+                        'codigo': data.codigo,
+                        'color': data.color.id,
+                        'descripcion': data.descripcion,
+                        'calibre': data.calibre,
+                        'precio': data.precio,
+                        'puente': data.puente,
+                        'sucursal': data.sucursal.id,
+                        'tipo_montura': data.tipo_montura.id,
+                        'material_armadura': data.material_armadura.id,
+                        'marca': data.marca.id,
+                        'tipo_armazon': data.tipo_armazon.id,
+                        'cristalIzq': data.cristalIzq.id,
+                        'cristalDer': data.cristalDer.id
+                    },
+                }).success(function (data, textStatus, jqXHR) {
+                    if (dist == 'cerca') {
+                        $('#lente_cerca').val(data.id);
+                        idLenteCerca = data.id;
+                    }
+                    else{
+                        $('#lente_lejos').val(data.id);
+                        idLenteLejos = data.id;
+                    }
+                }).error(function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR)
+                });
+            });
+            lockLenteForm();
+        }
+
+        $('#new').on('click', function (e) {
+            $('#numero').val('');
+            $('#fecha').val('');
+            $('#atendida').prop('checked', false);
+            initSucursal();
+            initDoctor();
+            initCliente();
+            loadLentesCerca();
+            loadLentesLejos();
+            $('#receta-title').text('Crear Receta');
+            $('#type-receta').val('new');
+        });
+
+        $('#confirm').on('click', '#delete', function (e) {
+            $.ajax({
+                url: '/api/receta/' + id + '/',
+                method: 'DELETE'
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        {% comment %}Hasta aqui las recetas{% endcomment %}
+
+        $('#lente-cerca-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            $('#dist-lente').val('cerca');
+            loadLenteModal('cerca');
+        });
+
+        $('#lente-lejos-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            $('#dist-lente').val('lejos');
+            loadLenteModal()
+        });
+
+        $('#form-edit-lente').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            dist = $('#dist-lente').val();
+            method = 'POST';
+            url = '/api/lentes/';
+            unlockLenteForm();
+            idCristalIzquierdoLenteCerca = null;
+            idCristalDerechoLenteCerca = null;
+            if (dist == "cerca")
+                id = $('#lente_cerca').val();
+            else
+                id = $('#lente_lejos').val();
+            url = url + id + '/';
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                if (dist == "cerca") {
+                    loadLentesCerca(data);
+                    idLenteCerca = data.id;
+                } else {
+                    loadLentesLejos(data);
+                    idLenteLejos = data.id;
+                }
+                lockLenteForm();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        function unlockLenteForm() {
+            $('#puente').removeAttr('disabled');
+            $('#precio').removeAttr('disabled');
+            $('#calibre').removeAttr('disabled');
+            $('#tipo_armazon').removeAttr('disabled');
+            $('#tipo_montura').removeAttr('disabled');
+            $('#marca').removeAttr('disabled');
+            $('#colorLente').removeAttr('disabled');
+            $('#nombre').removeAttr('disabled');
+            $('#material_armadura').removeAttr('disabled');
+            $('#descripcion').removeAttr('disabled');
+        }
+
+        function loadLenteModal(dist) {
+            url_lentes = "/api/lentes/";
+            if (dist == 'cerca')
+                url_lentes += $("#lente_cerca").val() + "/";
+            else
+                url_lentes += $("#lente_lejos").val() + "/";
+            $.ajax({
+                type: "GET",
+                url: url_lentes,
+            }).done(function (data) {
+                Materialize.updateTextFields();
+                $('#nombre').val(data['nombre']);
+                $('#codigo').val(data['codigo']);
+                $('#descripcion').val(data['descripcion']);
+                $('#calibre').val(data['calibre']);
+                $('#precio').val(data['precio']);
+                $('#puente').val(data['puente']);
+                $('#sucursal-lente').val(data['sucursal'].id);
+                $('#tipo_montura').append($('<option selected>', {
+                    class: 'option-tipo-montura',
+                    value: data['tipo_montura'].id,
+                    text: data['tipo_montura'].nombre
+                }));
+                console.log($('#tipo_montura').val());
+                $('#tipo_montura').material_select('destroy');
+                $('#tipo_montura').material_select();
+
+                $('#material_armadura').append($('<option>', {
+                    class: 'option-material-armadura',
+                    value: data['material_armadura'].id,
+                    text: data['material_armadura'].nombre
+                }));
+                $('#material_armadura').material_select('destroy');
+                $('#material_armadura').material_select();
+
+                $('#colorLente').append($('<option>', {
+                    class: 'option-color',
+                    value: data['color'].id,
+                    text: data['color'].nombre
+                }));
+                $('#colorLente').material_select('destroy');
+                $('#colorLente').material_select();
+
+                $('#marca').append($('<option>', {
+                    class: 'option-marca',
+                    value: data['marca'].id,
+                    text: data['marca'].nombre
+                }));
+                $('#marca').material_select('destroy');
+                $('#marca').material_select();
+
+                $('#tipo_armazon').append($('<option>', {
+                    class: 'option-tipo-armazon',
+                    value: data['tipo_armazon'].id,
+                    text: data['tipo_armazon'].nombre
+                }));
+                $('#tipo_armazon').material_select('destroy');
+                $('#tipo_armazon').material_select();
+                initCristalIzq(data['cristalIzq'].id);
+                initCristalDer(data['cristalDer'].id);
+                $('#lente-title').text('Editar el lente: ' + data['codigo']);
+
+            });
+        }
+
+        function lockLenteForm() {
+            $('#puente').attr('disabled', 'disabled');
+            $('#precio').attr('disabled', 'disabled');
+            $('#calibre').attr('disabled', 'disabled');
+            $('#tipo_armazon').attr('disabled', 'disabled');
+            $('#tipo_montura').attr('disabled', 'disabled');
+            $('#marca').attr('disabled', 'disabled');
+            $('#colorLente').attr('disabled', 'disabled');
+            $('#nombre').attr('disabled', 'disabled');
+            $('#material_armadura').attr('disabled', 'disabled');
+            $('#descripcion').attr('disabled', 'disabled');
+        }
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+
+        {% comment %}aqui los cristales{% endcomment %}
+
+        $('#cristal-izq-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            $('#cristal-lado').val('izq');
+            if (name == 'update-cristal-izq') {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/cristalesgraduados/" + $("#cristalIzq").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#nombreCristal').val(data['nombre']);
+                    $('#codigoCristal').val(data['codigo']);
+                    $('#precioCristal').val(data['precio']);
+                    $('#cantidadCristal').val(data['cantidad']);
+                    $('#descripcionCristal').val(data['descripcion']);
+                    $('#laboratorioCristal').prop('checked', data['laboratorio']);
+                    $('#activoCristal').val(data['activo']);
+                    $('#sucursal-cristal').val(data['sucursal'].id);
+                    initModeloCristal(data['modelo'].id);
+                    initMaterialCristal(data['material_cristal'].id);
+                    initColorCristal(data['color'].id);
+                    initMedCerca(data['medicion_cerca']);
+                    initMedLejos(data['medicion_lejos']);
+                    loadTratamientos(data['tratamientos']);
+                    $('#type-cristal').val('edit');
+                    $('#cristal-title').text('Editar el cristal ' + data['codigo']);
+                });
+            }
+            else {
+                $('#nombreCristal').val('');
+                $('#codigoCristal').val(2434);
+                $('#precioCristal').val('');
+                $('#cantidadCristal').val('');
+                $('#descripcionCristal').val('');
+                $('#laboratorioCristal').prop('checked', false);
+                $('#activoCristal').val(false);
+                $('#sucursal-cristal').val($('#sucursal').val());
+                initModeloCristal();
+                initMaterialCristal();
+                initColorCristal();
+                initLabCristal();
+                initMedCerca();
+                initMedLejos();
+                loadTratamientos();
+                $('#type-cristal').val('new');
+                $('#cristal-title').text('Añadir nuevo Cristal');
+            }
+            id = data['id'];
+        });
+
+        $('#cristal-der-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            $('#cristal-lado').val('der');
+            if (name == 'update-cristal-der') {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/cristalesgraduados/" + $("#cristalDer").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#nombreCristal').val(data['nombre']);
+                    $('#codigoCristal').val(data['codigo']);
+                    $('#precioCristal').val(data['precio']);
+                    $('#cantidadCristal').val(data['cantidad']);
+                    $('#descripcionCristal').val(data['descripcion']);
+                    $('#laboratorioCristal').prop('checked', data['laboratorio']).change();
+                    $('#activoCristal').val(data['activo']);
+                    $('#sucursal-cristal').val(data['sucursal'].id);
+                    initModeloCristal(data['modelo'].id);
+                    initMaterialCristal(data['material_cristal'].id);
+                    initColorCristal(data['color'].id);
+                    initLabCristal(data['laboratorio']);
+                    initMedCerca(data['medicion_cerca']);
+                    initMedLejos(data['medicion_lejos']);
+                    loadTratamientos(data['tratamientos']);
+                    $('#type-cristal').val('edit');
+                    $('#cristal-title').text('Ver detalles de ' + data['codigo']);
+                });
+            }
+            else {
+                $('#nombreCristal').val('');
+                $('#codigoCristal').val('');
+                $('#precioCristal').val('');
+                $('#cantidadCristal').val('');
+                $('#descripcionCristal').val('');
+                $('#laboratorioCristal').prop('checked', false);
+                $('#activoCristal').val(false);
+                $('#sucursal-cristal').val('');
+                initModeloCristal();
+                initMaterialCristal();
+                initColorCristal();
+                initLabCristal();
+                initMedCerca();
+                initMedLejos();
+                loadTratamientos();
+                $('#type-cristal').val('new');
+                $('#cristal-title').text('Añadir nuevo Cristal');
+            }
+            id = data['id'];
+        });
+
+        $('#form-edit-cristal').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-cristal').val();
+            lado = $('#cristal-lado').val();
+            dist = $('#dist-lente').val();
+            console.log($('#precio').val());
+            method = 'POST';
+            if ($('#type-receta').val() == 'edit')
+                method = 'PUT';
+            url = '/api/cristalesgraduados/';
+            if (method == 'PUT') {
+                if (dist == 'cerca') {
+                    if (lado == 'izq') {
+                        $.ajax({
+                            url: url + $('#cristalIzq').val() + '/',
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalIzquierdoLenteCerca = data['id'];
+                            initCristalIzq(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    } else {
+                        $.ajax({
+                            url: url + $('#cristalDer').val() + '/',
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalDerechoLenteCerca = data['id'];
+                            initCristalDer(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    }
+                } else {
+                    if (lado == 'izq') {
+                        $.ajax({
+                            url: url + $('#cristalIzq').val() + '/',
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalIzquierdoLenteLejos = data['id'];
+                            initCristalIzq(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    } else {
+                        $.ajax({
+                            url: url + $('#cristalDer').val() + '/',
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalDerechoLenteLejos = data['id'];
+                            initCristalDer(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    }
+                }
+            } else {
+                if (dist == 'cerca') {
+                    if (lado == 'izq') {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalIzquierdoLenteCerca = data['id'];
+                            initCristalIzq(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    } else {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalDerechoLenteCerca = data['id'];
+                            initCristalDer(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    }
+                } else {
+                    if (lado == 'izq') {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalIzquierdoLenteLejos = data['id'];
+                            initCristalIzq(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    } else {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            data: $this.serialize(),
+                        }).success(function (data, textStatus, jqXHR) {
+                            idCristalDerechoLenteLejos = data['id'];
+                            initCristalDer(data['id']);
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    }
+                }
+            }
+        });
+
+        $('#medicion-cerca-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-medicion-cerca') {
+                $('#type-medicion').val('edit');
+                $('#distancia-medicion').val('cerca');
+                console.log($("#medicion_cerca").val());
+                $.ajax({
+                    type: "GET",
+                    url: "/api/medicion/" + $("#medicion_cerca").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#esfera').val(data['esfera']);
+                    $('#cilindro').val(data['cilindro']);
+                    $('#eje').val(data['eje']);
+                    $('#prisma').val(data['prisma']);
+                    $('#altura').val(data['altura']);
+                    $('#medicion-title').text('Editar medicion');
+                });
+            }
+            else {
+                $('#esfera').val(0);
+                $('#cilindro').val(0);
+                $('#eje').val(0);
+                $('#prisma').val(0);
+                $('#altura').val(0);
+                $('#type-medicion').val('new');
+                $('#distancia-medicion').val('cerca');
+                $('#medicion-title').text('Crear Medicion');
+            }
+        });
+
+        $('#medicion-lejos-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-medicion-lejos') {
+                $('#type-medicion').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/medicion/" + $("#medicion_lejos").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#esfera').val(data['esfera']);
+                    $('#cilindro').val(data['cilindro']);
+                    $('#eje').val(data['eje']);
+                    $('#prisma').val(data['prisma']);
+                    $('#altura').val(data['altura']);
+                    $('#distancia-medicion').val('lejos');
+                    $('#medicion-title').text('Editar medicion');
+                });
+            }
+            else {
+                $('#esfera').val(0);
+                $('#cilindro').val(0);
+                $('#eje').val(0);
+                $('#prisma').val(0);
+                $('#altura').val(0);
+                $('#type-medicion').val('new');
+                $('#distancia-medicion').val('lejos');
+                $('#medicion-title').text('Crear Medicion');
+            }
+        });
+
+        $('#form-edit-medicion').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-medicion').val();
+            console.log(type);
+            method = 'POST';
+            url = '/api/medicion/';
+            id = null;
+            dist = $('#distancia-medicion').val();
+            if ($('#type-receta').val() == 'edit') {
+                method = 'PUT';
+                if (dist == "cerca")
+                    id = $('#medicion_cerca').val();
+                else
+                    id = $('#medicion_lejos').val();
+                url = url + id + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                if (dist == "cerca")
+                    initMedCerca(data);
+                else
+                    initMedLejos(data);
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        function initModeloCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/modelo",
+            }).done(function (data) {
+                $('.option-modelo-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#modeloCristal').append($('<option>', {
+                        class: 'option-modelo-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#modeloCristal').material_select('destroy');
+                $('#modeloCristal').val(val).change();
+                $('#modeloCristal').material_select();
+            });
+        }
+
+        function initMaterialCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/materialcristal",
+            }).done(function (data) {
+                $('.option-material-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#materialCristal').append($('<option>', {
+                        class: 'option-material-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#materialCristal').material_select('destroy');
+                $('#materialCristal').val(val).change();
+                $('#materialCristal').material_select();
+            });
+        }
+
+        function initColorCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/colores",
+            }).done(function (data) {
+                $('.option-color-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#colorCristal').append($('<option>', {
+                        class: 'option-color-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#colorCristal').material_select('destroy');
+                $('#colorCristal').val(val).change();
+                $('#colorCristal').material_select();
+            });
+        }
+
+        function initMedCerca(val) {
+            $('.option-med-cerca').remove();
+            $texto = 'esf:' + val.esfera + ' cil:' + val.cilindro + ' eje:' + val.eje + ' pris:' + val.prisma + ' alt:' + val.altura;
+            $('#medicion_cerca').append($('<option>', {
+                class: 'option-med-cerca',
+                value: val.id,
+                text: $texto
+            }));
+
+            $('#medicion_cerca').material_select('destroy');
+            $('#medicion_cerca').val(val.id).change();
+            $('#medicion_cerca').material_select();
+        }
+
+        function initMedLejos(val) {
+            $('.option-med-lejos').remove();
+            $texto = 'esf:' + val.esfera + ' cil:' + val.cilindro + ' eje:' + val.eje + ' pris:' + val.prisma + ' alt:' + val.altura;
+            $('#medicion_lejos').append($('<option>', {
+                class: 'option-med-lejos',
+                value: val.id,
+                text: $texto
+            }));
+
+            $('#medicion_lejos').material_select('destroy');
+            $('#medicion_lejos').val(val.id).change();
+            $('#medicion_lejos').material_select();
+        }
+
+        function loadLentesCerca(lente_cerca) {
+            var myConvertedData = [];
+            var myConvertedData2 = [];
+            $.ajax({
+                type: "GET",
+                url: "/api/lentes/?activo=True&pendiente=False",
+            }).done(function (data) {
+                $.each(data.data, function (index, value) {
+                    myConvertedData[value.codigo] = null;
+                    myConvertedData2[value.codigo] =
+                        {
+                            tag: value.codigo,
+                            id: value.id
+                        };
+                });
+                console.log(data);
+                console.log(myConvertedData2);
+                $('#lente_cerca_autocomplete_input').autocomplete({
+                    data: myConvertedData,
+                    minLength: 0,
+                    onAutocomplete: function (val) {
+                        $('#lente_cerca').val(myConvertedData2[val].id);
+                    },
+                });
+                if (lente_cerca) {
+                    $('#lente_cerca').val(lente_cerca.id);
+                    $('#lente_cerca_autocomplete_input').val(lente_cerca.codigo);
+                } else {
+                    $('#lente_cerca').val("");
+                    $('#lente_cerca_autocomplete_input').val("");
+                }
+            });
+        }
+
+        function loadLentesLejos(lente_lejos) {
+            var myConvertedData = [];
+            var myConvertedData2 = [];
+            $.ajax({
+                type: "GET",
+                url: "/api/lentes/",
+            }).done(function (data) {
+                $.each(data.data, function (index, value) {
+                    myConvertedData[value.codigo] = null;
+                    myConvertedData2[value.codigo] =
+                        {
+                            tag: value.codigo,
+                            id: value.id
+                        };
+                });
+
+                $('#lente_lejos_autocomplete_input').autocomplete({
+                    data: myConvertedData,
+                    minLength: 0,
+                    onAutocomplete: function (val) {
+                        $('#lente_lejos').val(myConvertedData2[val].id);
+                    },
+                });
+
+            });
+        }
+
+        function loadTratamientos(tratamientos) {
+            var myConvertedData = {};
+            var myConvertedData2 = [];
+            $('.option-tratamientos').remove();
+            $.each(tratamientos, function (index, value) {
+                myConvertedData2[index] =
+                    {
+                        tag: value.nombre,
+                        id: value.id
+                    };
+                $('#SelectTratamientos').append('<option selected class="option-tratamientos" value="' + value.id + '"></option>');
+            });
+            $.ajax({
+                type: "GET",
+                url: "/api/tratamientocristal",
+            }).done(function (data) {
+                $.each(data.results, function (index, value) {
+                    myConvertedData[value.nombre + " "] = null;
+                });
+                $('.chips-autocomplete').material_chip({
+                    autocompleteOptions: {
+                        data: myConvertedData,
+                        minLength: 0
+                    },
+                    data: myConvertedData2
+                });
+
+                $('.chips').on('chip.add', function (e, chip) {
+                    // you have the added chip here
+                    {# $('.option-tratamientos').remove();#}
+                    $.each(data.results, function (index, value) {
+                        if (chip.tag == value.nombre) {
+                            chip.id = value.id;
+                            $('#SelectTratamientos').append('<option selected class="option-tratamientos" value="' + value.id + '"></option>')
+                        }
+                    });
+                    var data1 = $('.chips-autocomplete').material_chip('data');
+                    if (chip.id == undefined) {
+                        data1.splice(data1.length - 1, 1);
+                    }
+                    $('.chips-autocomplete').material_chip({
+                        data: data1,
+                        autocompleteOptions: {
+                            data: myConvertedData,
+                            minLength: 0
+                        }
+                    });
+                    //console.log(data1);
+                });
+                $('.chips').on('chip.delete', function (e, chip) {
+                    // you have the added chip here
+                    $('option.option-tratamientos[value="' + chip.id + '"]').remove();
+                });
+            });
+        }
+
+    </script>
+{% endblock %}

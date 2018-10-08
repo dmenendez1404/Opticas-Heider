@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">Adicionar Venta</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="index.html">Ventas</a></li>
+    <li class="active">Adicionar Venta</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+        <form id="form-add-venta" role="form">
+            <div class="row">
+                <input type="hidden" class="form-control" id="subtotal" name="subtotal"
+                       required="true">
+                <input type="hidden" class="form-control" id="total" name="total"
+                       required="true">
+                <div class="col s4 m4 left">
+                    <div class="col s12">
+                        <label for="cliente">Cliente</label>
+                        <select id="cliente" name="cliente">
+                            <option value="" disabled selected>Seleccione un Cliente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col s4 m4 ">
+                    <div class="col s10">
+                        <label for="sucursal">Sucursal</label>
+                        <select id="sucursal" name="sucursal">
+                            <option value="" disabled selected>Seleccione una Sucursal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col s4 m4 right">
+                    <div class="col s12">
+                        <label for="fecha">Fecha</label>
+                        <br><br>
+                        <input type="text" name="fecha" id="fecha" class="datepicker" required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="autocompletamientos">
+                <div class="col s6 m6">
+                    <label for="recetas"></span> Recetas</label>
+                    <div class="chips-recetas chips-initial chips-autocomplete-recetas" id="recetas"
+                         name="recetas"></div>
+                    <select multiple id="SelectRecetas" name="recetas"></select>
+                </div>
+                <div class="col s6 m6">
+                    <label for="articulos"> Artículos</label>
+                    <div class="chips-articulos chips-initial chips-autocomplete-articulos" id="articulos"
+                         name="articulos"></div>
+                    <select multiple id="SelectArticulos" name="articulos"></select>
+                </div>
+            </div>
+            <div class="row">
+                <table id="carrito" class="bordered responsive-table">
+                    <thead>
+                    <th>No.</th>
+                    <th style="width: 50%"> Artículo</th>
+                    <th>No. Receta</th>
+                    <th>Unidades</th>
+                    <th>Costo</th>
+                    </thead>
+
+                    <tbody id="content-carrito">
+
+                    </tbody>
+
+                    <tfoot>
+                    <th><p>Subtotal:</p></th>
+                    <th style="width: 50%"></th>
+                    <th></th>
+                    <th></th>
+                    <th><p id="subtotalCosto">$0</p></th>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col s4 m4">
+                    <label class="range-field"> % de Descuento
+                        <input type="range" class="form-control" id="descuento" name="descuento" value="0" min="0"
+                               max="100"/>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4">
+                    Costo Total:
+                    </label>
+                    <p id="costoTotal">$0</p>
+                </div>
+            </div>
+            <div class="fixed-action-btn">
+                <a id="submit" href="{% url 'ventas' %}" class="btn-floating btn-large red right" type="submit"><i
+                        class="mdi-content-send"></i></a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+    <script>
+
+        initSucursal();
+        initCliente();
+        loadArticulos();
+        loadRecetas();
+        subtotal = 0;
+        total = 0;
+        descuento = 0;
+
+        // $('#cliente').on('change', function () {
+        //      loadRecetas($(this).val());
+        // });
+
+
+        function loadRecetas(id) {
+            var myConvertedData = {};
+            $('.option-recetas').remove();
+            url = "/api/receta/";
+            if (id)
+                url = "/api/receta/?cliente=" + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+            }).done(function (data) {
+                $.each(data.data, function (index, value) {
+                    myConvertedData[value.numero + " "] = null;
+                });
+                $('.chips-autocomplete-recetas').material_chip({
+                    autocompleteOptions: {
+                        data: myConvertedData,
+                        minLength: 0
+                    },
+                });
+
+                $('.chips-recetas').on('chip.add', function (e, chip) {
+                    // you have the added chip here
+                    //$('.option-tratamientos').remove();
+                    i = 0;
+                    $.each(data.data, function (index, value) {
+                        if (chip.tag == value.numero) {
+                            i++;
+                            chip.id = value.id;
+                            $('#SelectRecetas').append('<option selected class="option-recetas" value="' + value.id + '"/>');
+                        }
+                    });
+                    console.log(i);
+                    var data1 = $('.chips-autocomplete-recetas').material_chip('data');
+                    if (chip.id == undefined) {
+                        data1.splice(data1.length - 1, 1);
+                    }
+                    $('.chips-autocomplete-recetas').material_chip({
+                        data: data1,
+                        autocompleteOptions: {
+                            data: myConvertedData,
+                            minLength: 0
+                        }
+                    });
+                    console.log(data1);
+                });
+                $('.chips-recetas').on('chip.delete', function (e, chip) {
+                    // you have the added chip here
+                    $('option.option-recetas[value="' + chip.id + '"]').remove();
+                });
+            });
+        }
+
+        function loadArticulos() {
+            var myConvertedData = {};
+            $('.option-articulos').remove();
+            $.ajax({
+                type: "GET",
+                url: "/api/articulo",
+            }).done(function (data) {
+                $.each(data.results, function (index, value) {
+                    myConvertedData[value.codigo + " "] = null;
+                });
+                $('.chips-autocomplete-articulos').material_chip({
+                    autocompleteOptions: {
+                        data: myConvertedData,
+                        minLength: 0
+                    },
+                });
+
+                $('.chips-articulos').on('chip.add', function (e, chip) {
+                    // you have the added chip here
+                    // $('.option-tratamientos').remove();
+
+                    $.each(data.results, function (index, value) {
+                        if (chip.tag == value.codigo) {
+                            chip.id = value.id;
+                            addArticulo(value);
+                            $('#SelectArticulos').append('<option selected class="option-articulos" value="' + value.id + '"></option>');
+                        }
+                    });
+                    var data1 = $('.chips-autocomplete-articulos').material_chip('data');
+                    if (chip.id == undefined) {
+                        data1.splice(data1.length - 1, 1);
+                    }
+                    $('.chips-autocomplete-articulos').material_chip({
+                        data: data1,
+                        autocompleteOptions: {
+                            data: myConvertedData,
+                            minLength: 0
+                        }
+                    });
+                    //console.log(data1);
+                });
+                $('.chips-articulos').on('chip.delete', function (e, chip) {
+                    // you have the added chip here
+                    $('option.option-articulos[value="' + chip.id + '"]').remove();
+                    costo = parseFloat($('#' + chip.id).children().eq(4).text());
+                    console.log(costo);
+                    addSubtotal(costo * -1);
+                    $('#' + chip.id).remove();
+                    $('#carrito').ajax.reload();
+                });
+            });
+        }
+
+        function addArticulo(articulo) {
+            count = $('#content-carrito tr').length + 1;
+            $('#content-carrito').append("<tr id='" + articulo.id + "' class='item'>" +
+                "<td>" + count +
+                "<td >" + articulo.codigo +
+                "<td>No receta" +
+                "<td> <input style = 'width:50px' type='number' " +
+                " class='cantidad-item' id='cant " + articulo.id + "'value=1 oldValue=1 />" +
+                "<td data='" + articulo.precio + "'>" + articulo.precio +
+                "</tr>");
+            addSubtotal(articulo.precio);
+        }
+
+        $(document).on('change', '.cantidad-item', function () {
+            diferencia = $(this).val() - $(this).attr('oldValue');
+            $(this).attr('oldValue', $(this).val());
+            tr = $(this).parents('tr');
+            costo = parseFloat(tr.children().eq(4).attr('data'));
+            costoItem = $(this).val() * costo;
+            tr.children().eq(4).html(String(costoItem));
+            addSubtotal(diferencia * costo);
+        });
+
+        function addSubtotal(val) {
+            subtotal += val;
+            $('#subtotalCosto').text("$" + subtotal);
+            total = subtotal - ((descuento * subtotal) / 100);
+            $('#costoTotal').text("$" + total);
+        }
+
+        $('#descuento').on('change', function (e) {
+            changeDescuento();
+        });
+
+        function changeDescuento() {
+            descuento = $('#descuento').val();
+            total = subtotal - ((descuento * subtotal) / 100);
+            $('#costoTotal').text("$" + total);
+        }
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+
+        $('#submit').on('click', function () {
+            $('#total').val(total);
+            $('#subtotal').val(subtotal);
+            $.ajax({
+                url: '/api/venta/',
+                type: 'POST',
+                data: $('#form-add-venta').serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                $.each(data.articulos, function (index, value) {
+                    cant = parseInt($('#' + value).children().eq(3).children().eq(0).val());
+                    $.ajax({
+                        url: '/api/articulo/' + value + '/',
+                        type: 'GET',
+                    }).success(function (data, textStatus, jqXHR) {
+                        $.ajax({
+                            url: '/api/articulo/' + data.id + '/',
+                            type: 'PATCH',
+                            data: {'cantidad': data.cantidad - cant},
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    });
+                });
+                $.each(data.recetas, function (index, value) {
+                    $.ajax({
+                        url: '/api/receta/' + value + '/',
+                        type: 'GET',
+                    }).success(function (data, textStatus, jqXHR) {
+                        $.ajax({
+                            url: '/api/receta/' + data.id + '/',
+                            type: 'PATCH',
+                            data: {'atendida': 'True'},
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    });
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

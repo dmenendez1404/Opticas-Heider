@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+    {% load static %}
+{% endblock %}
+
+
+
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">Estad&iacute;sticas</h5>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="row">
+        <div class="col s12 m8 l12">
+            <div class="card">
+                <div class="card-move-up waves-effect waves-block waves-light">
+                    <div class="move-up cyan darken-1">
+                        <div>
+                            <span class="chart-title white-text"></span>
+                            <div class="chart-revenue cyan darken-2 white-text" style="text-align: left;">
+                                <p class="chart-revenue-total">$0</p>
+                                <p class="chart-revenue-per">0%</p>
+                            </div>
+                            <div class="switch chart-revenue-switch right">
+                                <label class="cyan-text text-lighten-5">
+                                    Meses
+                                    <input type="checkbox">
+                                    <span class="lever"></span>
+                                    Años
+                                </label>
+                            </div>
+                        </div>
+                        <div class="trending-line-chart-wrapper">
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %}<div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">Revenue by Month <i
+                                            class="mdi-navigation-close right"></i></span>
+                    <table class="responsive-table">
+                        <thead>
+                        <tr>
+                            <th data-field="month">Meses</th>
+                            <th data-field="item-sold">Cantidad</th>
+                            <th data-field="total-profit">Total recaudado</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>January</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>February</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>March</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>April</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>May</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>June</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>July</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>August</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>Septmber</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>Octomber</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>November</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        <tr>
+                            <td>December</td>
+                            <td>100</td>
+                            <td>$122,00.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>{% endcomment %}
+
+
+            </div>
+        </div>
+    </div>
+
+    {% comment %}<div class="row">
+        <div class="col s12 m8 l12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="col s12 m5 l12">
+                        <div class="trending-bar-chart-wrapper">
+                            <canvas id="trending-bar-chart" height="100"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>{% endcomment %}
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    <!-- data-tables -->
+    {% load static %}
+
+    <script>
+        $(document).ready(function () {
+            var informacionMeses = inicializarInformacionMeses();
+            inicializarGrafica(informacionMeses);
+
+            function inicializarGrafica(datos) {
+                $("div[class='trending-line-chart-wrapper']").html("<canvas id='trending-line-chart' height='70'></canvas>");
+
+                //Volviendo a definir la variable trendingLineChart con los nuevos datos
+                var trendingLineChart = document.getElementById("trending-line-chart").getContext("2d");
+                window.trendingLineChart = new Chart(trendingLineChart).Line(datos, {
+                    scaleShowGridLines: true,///Boolean - Whether grid lines are shown across the chart
+                    scaleGridLineColor: "rgba(255,255,255,0.4)",//String - Colour of the grid lines
+                    scaleGridLineWidth: 1,//Number - Width of the grid lines
+                    scaleShowHorizontalLines: true,//Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowVerticalLines: false,//Boolean - Whether to show vertical lines (except Y axis)
+                    bezierCurve: true,//Boolean - Whether the line is curved between points
+                    bezierCurveTension: 0.4,//Number - Tension of the bezier curve between points
+                    pointDot: true,//Boolean - Whether to show a dot for each point
+                    pointDotRadius: 5,//Number - Radius of each point dot in pixels
+                    pointDotStrokeWidth: 2,//Number - Pixel width of point dot stroke
+                    pointHitDetectionRadius: 20,//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                    datasetStroke: true,//Boolean - Whether to show a stroke for datasets
+                    datasetStrokeWidth: 3,//Number - Pixel width of dataset stroke
+                    datasetFill: true,//Boolean - Whether to fill the dataset with a colour
+                    animationSteps: 15,// Number - Number of animation steps
+                    animationEasing: "easeOutQuart",// String - Animation easing effect
+                    tooltipTitleFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
+                    scaleFontSize: 12,// Number - Scale label font size in pixels
+                    scaleFontStyle: "normal",// String - Scale label font weight style
+                    scaleFontColor: "#fff",// String - Scale label font colour
+                    tooltipEvents: ["mousemove", "touchstart", "touchmove"],// Array - Array of string names to attach tooltip events
+                    tooltipFillColor: "rgba(255,255,255,0.8)",// String - Tooltip background colour
+                    tooltipTitleFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
+                    tooltipFontSize: 12,// Number - Tooltip label font size in pixels
+                    tooltipFontColor: "#000",// String - Tooltip label font colour
+                    tooltipTitleFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
+                    tooltipTitleFontSize: 14,// Number - Tooltip title font size in pixels
+                    tooltipTitleFontStyle: "bold",// String - Tooltip title font weight style
+                    tooltipTitleFontColor: "#000",// String - Tooltip title font colour
+                    tooltipYPadding: 8,// Number - pixel width of padding around tooltip text
+                    tooltipXPadding: 16,// Number - pixel width of padding around tooltip text
+                    tooltipCaretSize: 10,// Number - Size of the caret on the tooltip
+                    tooltipCornerRadius: 6,// Number - Pixel radius of the tooltip border
+                    tooltipXOffset: 10,// Number - Pixel offset from point x to tooltip edge
+                    responsive: true
+                });
+            }
+
+            $("label[class='cyan-text text-lighten-5'] input[type='checkbox']").on('click', function () {
+                var checked = $("label[class='cyan-text text-lighten-5'] input[type='checkbox']").is(":checked");
+                if (checked) {
+                    var informacionAnnos = inicializarInformacionAnnos();
+                    inicializarGrafica(informacionAnnos);
+                } else {
+                    var informacionMeses = inicializarInformacionMeses();
+                    inicializarGrafica(informacionMeses);
+                }
+            });
+
+            function porciento(parte, todo) {
+                return new Number(parte * 100 / todo).toFixed(2);
+            }
+
+            function inicializarInformacionMeses() {
+                var mesActual = 1;
+                var annoActual = 0;
+                var totalesPorMes = {};
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/api/venta/1/ventasEnAnnoActual"
+                }).success(function (result) {
+                    var sumaTotalMeses = result['sumaTotal'];
+                    totalesPorMes = result['totalesPorMes'];
+                    mesActual = result['mesActual'];
+                    annoActual = result['annoActual'];
+
+                    $('span[class="chart-title white-text"]').html('Ventas del año actual ('+annoActual+')');
+
+                    /*Imprimiendo la suma total en los meses del anno actual*/
+                    $('p[class="chart-revenue-total"]').html('$' + sumaTotalMeses.toFixed(2));
+
+                    /*Imprimiendo el porciento del mes actual respecto al mes anterior*/
+                    var totalMesActual = totalesPorMes[mesActual];
+                    var totalMesAnterior = 0;
+                    var parrafoDePorciento = $('p[class="chart-revenue-per"]');
+                    if (mesActual > 1) {
+                        totalMesAnterior = totalesPorMes[mesActual - 1];
+                        var porCiento = porciento(totalMesActual, totalMesAnterior);
+                        parrafoDePorciento.html(Math.abs(porCiento) + '%');
+                    } else {
+                        parrafoDePorciento.html('---- %');
+                    }
+                });
+
+                var arregloMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                var informacionMeses = {
+                    labels: new Array(),
+                    datasets: [
+                        {
+                            label: "meses",
+                            fillColor: "rgba(128, 222, 234, 0.6)",
+                            strokeColor: "#ffffff",
+                            pointColor: "#00bcd4",
+                            pointStrokeColor: "#ffffff",
+                            pointHighlightFill: "#ffffff",
+                            pointHighlightStroke: "#ffffff",
+                            data: new Array()
+                        }
+                    ]
+                };
+                for (var mes = 1; mes <= mesActual; mes++) {
+                    informacionMeses.labels.push(arregloMeses[mes-1]);
+                    informacionMeses.datasets[0].data.push(totalesPorMes[mes]);
+                }
+                return informacionMeses;
+            }
+
+            function inicializarInformacionAnnos() {
+                var annoActual = 0;
+                var annoMenor = annoActual;
+                var totalesPorAnno = {};
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/api/venta/1/ventasPorAnno"
+                }).success(function (result) {
+                    var sumaTotalAnnos = result['sumaTotal'];
+                    totalesPorAnno = result['totalesPorAnno'];
+                    annoActual = result['annoActual'];
+                    annoMenor = result['annoMenor'];
+
+                    $('span[class="chart-title white-text"]').html('Ventas de '+annoMenor+' a '+annoActual);
+
+                    /*Imprimiendo la suma total*/
+                    $('p[class="chart-revenue-total"]').html('$' + sumaTotalAnnos.toFixed(2));
+
+                    /*Imprimiendo el porciento del mes actual respecto al mes anterior*/
+                    var totalAnnoActual = totalesPorAnno[annoActual];
+                    var totalAnnoAnterior = 0;
+                    var parrafoDePorciento = $('p[class="chart-revenue-per"]');
+                    if (totalesPorAnno[annoActual - 1] != undefined && totalesPorAnno[annoActual - 1] > 0) {
+                        totalAnnoAnterior = totalesPorAnno[annoActual - 1];
+                        var porCiento = porciento(totalAnnoActual, totalAnnoAnterior);
+                        parrafoDePorciento.html(Math.abs(porCiento) + '%');
+                    } else {
+                        parrafoDePorciento.html('---- %');
+                    }
+                });
+
+                var informacionAnnos = {
+                    labels: new Array(),
+                    datasets: [
+                        {
+                            label: "annos",
+                            fillColor: "rgba(128, 222, 234, 0.6)",
+                            strokeColor: "#ffffff",
+                            pointColor: "#00bcd4",
+                            pointStrokeColor: "#ffffff",
+                            pointHighlightFill: "#ffffff",
+                            pointHighlightStroke: "#ffffff",
+                            data: new Array()
+                        }
+                    ]
+                };
+                for (var i = annoMenor; i <= annoActual; i++) {
+                    informacionAnnos.labels.push(i);
+                    var total = totalesPorAnno[i] == undefined ? 0 : totalesPorAnno[i].toFixed(2);
+                    informacionAnnos.datasets[0].data.push(total);
+                }
+                return informacionAnnos;
+            }
+        });
+    </script>
+    {# Luego terminar el bar chart #}
+ {% comment %}   <script>
+        var dataBarChart = null;
+        var nReloads1 = 0;
+        var min1 = 1;
+        var max1 = 10;
+        var l1 = 0;
+        var trendingBarChart;
+
+        function updateBarChart() {
+            nReloads1++;
+            var x = Math.floor(Math.random() * (max1 - min1 + 1)) + min1;
+            trendingBarChart.addData([x], dataBarChart.labels[l1]);
+            trendingBarChart.removeData();
+            l1++;
+            if (l1 == dataBarChart.labels.length) {
+                l1 = 0;
+            }
+        }
+
+        function inicializarDataBarChart(mesActual) {
+            var dataBarChart = {
+                /*"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"*/
+                labels: [],
+                datasets: [
+                    {
+                        label: "Bar dataset",
+                        fillColor: "#46BFBD",
+                        strokeColor: "#46BFBD",
+                        highlightFill: "rgba(70, 191, 189, 0.4)",
+                        highlightStroke: "rgba(70, 191, 189, 0.9)",
+                        data: []
+                    }
+                ]
+            };
+            /*Llenar los meses que se listaran en dependencia del mes actual en el anno*/
+            switch (mesActual) {
+                case '01': {
+                    dataBarChart.labels = ["Enero"];
+                    dataBarChart.datasets[0].data = [0];
+                    break;
+                }
+                case '02': {
+                    dataBarChart.labels = ["Enero", "Febrero"];
+                    dataBarChart.datasets[0].data = [0, 0];
+                    break;
+                }
+                case '03': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo"];
+                    dataBarChart.datasets[0].data = [0, 0, 0];
+                    break;
+                }
+                case '04': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0];
+                    break;
+                }
+                case '05': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0];
+                    break;
+                }
+                case '06': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '07': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '08': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '09': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '10': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '11': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+                case '12': {
+                    dataBarChart.labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    dataBarChart.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    break;
+                }
+            }
+
+            return dataBarChart;
+        }
+
+        function obtenerFechaActual() {
+            return '2018-05-03';
+        }
+
+        $(document).ready(function () {
+            var fechaActual = obtenerFechaActual();
+            var arrayFechaActual = fechaActual.split('-');
+            var annoActual = arrayFechaActual[0];
+            var mesActual = arrayFechaActual[1];
+
+            dataBarChart = inicializarDataBarChart(mesActual);
+
+
+            /*Aqui debo usar la consulta para obtener las ventas del anno actual*/
+            /*El objetivo es llenar la cantidad total de ventas por mes*/
+            $.ajax({
+                type: "GET",
+                url: "/api/venta/"
+            }).success(function (respuesta) {
+                var ventas = respuesta.data;
+                var cantidadVentas = ventas.length;
+
+                for (var i = 0; i < cantidadVentas; i++) {
+                    var fechaVenta = ventas[i].fecha;
+                    var arrayFechaVenta = fechaVenta.split('-');
+                    var anno = arrayFechaVenta[0];
+                    var mes = arrayFechaVenta[1];
+                    switch (mes) {
+                        case '01': {
+                            dataBarChart.datasets[0].data[0] += 1;
+                            break;
+                        }
+                        case '02': {
+                            dataBarChart.datasets[0].data[1] += 1;
+                            break;
+                        }
+                        case '03': {
+                            dataBarChart.datasets[0].data[2] += 1;
+                            break;
+                        }
+                        case '04': {
+                            dataBarChart.datasets[0].data[3] += 1;
+                            break;
+                        }
+                        case '05': {
+                            console.log(dataBarChart.datasets[0].data[4]);
+                            dataBarChart.datasets[0].data[4] += 1;
+                            console.log('entro');
+                            console.log(dataBarChart.datasets[0].data[4]);
+                            break;
+                        }
+                        case '06': {
+                            dataBarChart.datasets[0].data[5] += 1;
+                            break;
+                        }
+                        case '07': {
+                            dataBarChart.datasets[0].data[6] += 1;
+                            break;
+                        }
+                        case '08': {
+                            dataBarChart.datasets[0].data[7] += 1;
+                            break;
+                        }
+                        case '09': {
+                            dataBarChart.datasets[0].data[8] += 1;
+                            break;
+                        }
+                        case '10': {
+                            dataBarChart.datasets[0].data[9] += 1;
+                            break;
+                        }
+                        case '11': {
+                            dataBarChart.datasets[0].data[10] += 1;
+                            break;
+                        }
+                        case '12': {
+                            dataBarChart.datasets[0].data[11] += 1;
+                            break;
+                        }
+                    }
+
+                }
+            });
+
+            var trendingBarChart = document.getElementById("trending-bar-chart").getContext("2d");
+            window.trendingBarChart = new Chart(trendingBarChart).Bar(dataBarChart, {
+                scaleShowGridLines: false,///Boolean - Whether grid lines are shown across the chart
+                showScale: true,
+                animationSteps: 15,
+                tooltipTitleFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
+                responsive: true
+            });
+        });
+        /*
+        Trending Bar Chart
+        */
+    </script>{% endcomment %}
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+    {% load static %}
+    <link href="{% static 'js/plugins/data-tables/css/jquery.dataTables.min.css' %}" type="text/css" rel="stylesheet"
+          media="screen,projection">
+{% endblock %}
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">VENTAS</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="active">Ventas</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+        <div id="table-datatables">
+            <div class="row">
+                <div class="col s12">
+                    <table id="data-table-ventas" class="responsive-table data-table-simple display" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Fecha</th>
+                            <th>Sucursal</th>
+                            <th>Cliente</th>
+                            <th>Sub Total</th>
+                            <th>% Descuento</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    {# boton de añadir #}
+                    <a id="new" class="btn-floating btn-large red modal-trigger right" href="{% url 'addVentas' %}"
+                       type="button"><i
+                            class="large mdi-content-add"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/js/jquery.dataTables.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/plugins/data-tables/data-tables-script.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/otherForms.js" %}"></script>
+
+    <script>
+
+            table = $("#data-table-ventas").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/api/venta/",
+                    "type": "GET"
+                },
+                "columns": [
+                    {"data": "id"},
+                    {"data": "fecha"},
+                    {"data": "sucursal.nombre"},
+                    {
+                        "data": function (row, type, val, meta) {
+                            return row.cliente.usuario.first_name + " " + row.cliente.usuario.last_name;
+                        }
+                    },
+                     {"data": "subtotal" },
+                     {"data": "descuento"},
+                     {"data": "total"}
+                ]
+            });
+
+    </script>
+{% endblock %}

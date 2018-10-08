@@ -1,0 +1,955 @@
+<div id="table-datatables">
+    <div class="row">
+        <div class="col s12">
+            <table id="data-table-cristal" class="responsive-table data-table-simple display" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Sucursal</th>
+                    <th>Color</th>
+                    <th>Modelo</th>
+                    <th>Material del Cristal</th>
+                    <th>Laboratorio</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- NEW and EDIT Modal -->
+<div id="ModalEditCristal" class="modal card-panel modal-fixed-footer" style="width: 90%">
+    <div class="modal-content">
+        <h4 class="modal-title center-align">Editar Cristal Graduado</h4>
+        <form id="form-edit-cristal" role="form">
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="nombreCristal">Nombre</label>
+                        <input type="text" class="form-control" id="nombreCristal" name="nombre"
+                               placeholder="Escriba el nombre del cristal"
+                               required="true">
+                        <input type="hidden" class="form-control" id="codigoCristal" name="codigo"
+                               required="true">
+                        <input type="hidden" class="form-control" id="activoCristal" name="activo"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <div class="col s10">
+                            <label for="sucursalcristalG">Sucursal</label>
+                            <select id="sucursalcristalG" name="sucursal">
+                            </select>
+                        </div>
+                        <div class="col s2" id="sucursal-cristalG-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-sucursal"
+                               href="#addSucursalcristalG">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-sucursal"
+                               href="#addSucursalcristalG">
+                                <i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="precio">Precio</label>
+                        <input type="number" class="form-control" id="precioCristal" name="precio"
+                               placeholder="Escriba el precio del Cristal"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4 left">
+                    <div class="col s10">
+                        <label for="colorCristal">Color</label>
+                        <select id="colorCristal" name="color">
+                        </select>
+                    </div>
+                    <div class="col s2" id="color-cristalG-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-color"
+                           href="#addColorCristalG">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-color"
+                           href="#addColorCristalG">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="modeloCristal">Modelo</label>
+                        <select id="modeloCristal" name="modelo">
+                        </select>
+                    </div>
+                    <div class="col s2" id="modelo-cristalG-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-modelo"
+                           href="#addModeloCristalG">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-modelo"
+                           href="#addModeloCristalG">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+
+                <div class="col s4 m4 right">
+                    <div class="col s10">
+                        <label for="materialCristal">Material del Cristal</label>
+                        <select id="materialCristal" name="material_cristal">
+                        </select>
+                    </div>
+                    <div class="col s2" id="material-cristalG-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-MatCristal"
+                           href="#addMaterialCristalG">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-MatCristal"
+                           href="#addMaterialCristalG">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4 left">
+                    <input type="checkbox" id="laboratorioCristal" class="teal" name="laboratorio" value="true"/>
+                    <label for="laboratorioCristal">Laboratorio</label>
+                </div>
+
+                <div class="col s4 m4 left">
+                    <div class="col s10">
+                        <label for="medicion_cerca">Medición Cerca</label>
+                        <select id="medicion_cerca" name="medicion_cerca">
+                        </select>
+                    </div>
+                    <div class="col s2" id="medicion-cerca-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-medicion-cerca"
+                           href="#addMedicion">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-medicion-cerca"
+                           href="#addMedicion">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="col s4 m4 left">
+                    <div class="col s10">
+                        <label for="medicion_lejos">Medición Lejos</label>
+                        <select id="medicion_lejos" name="medicion_lejos">
+                        </select>
+                    </div>
+                    <div class="col s2" id="medicion-lejos-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-medicion-lejos"
+                           href="#addMedicion">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-medicion-lejos"
+                           href="#addMedicion">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="tratamientos">Tratamientos</label>
+                        <div class="chips chips-initial chips-autocomplete" id="tratamientos" name="tratamientos"></div>
+                        <select multiple id="SelectTratamientos" name="tratamientos">
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="descripcionCristal" name="descripcion" class="materialize-textarea"></textarea>
+                    <label for="descripcionCristal">Descripcion</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type-cristal" name="type" value="">
+                    <button type="submit" class="btn btn-flat teal white-text modal-action modal-close rigth" href="!#">
+                        <i class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- NEW and EDIT Medicion -->
+<div id="addMedicion" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4 id="medicion-title" class="modal-title center-align">Editar Medicion</h4>
+        <form id="form-edit-medicion" role="form">
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="esfera">Esfera</label>
+                        <input type="number" class="form-control" id="esfera" name="esfera"
+                               placeholder="Escriba el valor de la esfera"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="cilindro">Cilindro</label>
+                        <input type="number" class="form-control" id="cilindro" name="cilindro"
+                               placeholder="Escriba el valor del cilindro"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="esfera">Eje</label>
+                        <input type="number" class="form-control" id="eje" name="eje"
+                               placeholder="Escriba el valor del eje"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="prisma">Prisma</label>
+                        <input type="number" class="form-control" id="prisma" name="prisma"
+                               placeholder="Escriba el valor del prisma"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="altura">Altura</label>
+                        <input type="number" class="form-control" id="altura" name="altura"
+                               placeholder="Escriba el valor de la altura"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="distancia-medicion" name="type" value="">
+                <input type="hidden" id="type-medicion" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--MODAL Add Sucursal Cristal Graduado  -->
+<div id="addSucursalcristalG" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir nueva Sucursal</h4>
+        <form id="form-sucursal-cristalG">
+            <div class="form-group">
+                <label for="nombre-sucursal-cristalG"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-sucursal-cristalG" name="nombre"
+                       placeholder="Escriba el nombre de la sucursal"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="direccion-sucursal-cristalG"><span class="glyphicon glyphicon-pencil"></span>
+                        Direccion</label>
+                    <input type="text" class="form-control" id="direccion-sucursal-cristalG" name="direccion"
+                           placeholder="Escriba la direccion de la sucursal"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-sucursal-cristalG" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Cristal-->
+<div class="modal" id="deleteCristal">
+    <div class="modal-content">
+        <h4 class="modal-title">Seguro desea eliminar</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat " id="delete">Eliminar</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat ">Cancelar</a>
+    </div>
+</div>
+
+
+<!--MODAL Add Color -->
+<div id="addColorCristalG" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir un nuevo Color</h4>
+        <form id="form-color-cristalG">
+            <div class="form-group">
+                <label for="nombre-color-cristalG"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-color-cristalG" name="nombre"
+                       placeholder="Escriba el color que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="siglas-color-cristalG"><span class="glyphicon glyphicon-pencil"></span>
+                        Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-color-cristalG" name="siglas"
+                           placeholder="Escriba las siglas del color"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-color-cristalG" name="type" value=" ">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--MODAL Add Modelo -->
+<div id="addModeloCristalG" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir una nueva Marca</h4>
+        <form id="form-modelo-cristalG">
+            <div class="form-group">
+                <label for="nombre-modelo-cristalG"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-modelo-cristalG" name="nombre"
+                       placeholder="Escriba el modelo que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-modelo-cristalG"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripción</label>
+                    <input type="text" class="form-control" id="descripcion-modelo-cristalG" name="descripcion"
+                           placeholder="Escriba la descripción del modelo"
+                           required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="siglas-modelo-cristalG"><span class="glyphicon glyphicon-pencil"></span> Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-modelo-cristalG" name="siglas"
+                           placeholder="Escriba las siglas del modelo"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type" name="type-modelo-cristalG" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--MODAL Add MAterial Cristal -->
+<div id="addMaterialCristalG" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir un nuevo tipo de material de cristal</h4>
+        <form id="form-material-cristalG">
+            <div class="form-group">
+                <label for="nombre-material-cristalG"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-material-cristalG" name="nombre"
+                       placeholder="Escriba el nombre del material del cristal"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-material-cristalG"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion-material-cristalG" name="descripcion"
+                           placeholder="Escriba la descripcion del material del cristal"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-material-cristalG" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        idTratamientos = [];
+        id = 0;
+        table = $("#data-table-cristal").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/cristalesgraduados/",
+                "type": "GET"
+            },
+            "columns": [
+                {
+                    "data": function (row, type, val, meta) {
+                        return '<img src="data:image/png;base64,'+row.bar_code+'" alt="codigo de barra" />';
+                    }
+                },
+                {"data": "nombre"},
+                {"data": "sucursal.nombre"},
+                {"data": "color.nombre"},
+                {"data": "modelo.nombre"},
+                {"data": "material_cristal.nombre"},
+                {
+                    "data": function (row, type, val, meta) {
+                        if (row.laboratorio)
+                            return '<i class="mdi-action-done"></i>';
+                        return '<i class="mdi-content-clear"></i>';
+                    }
+                },
+                {"data": "precio"},
+                {"data": "cantidad"},
+                {
+                    "data": null,
+                    "defaultContent": '<a href="#ModalEditCristal" name="update" class="modal-trigger"><i class="mdi-content-create"></i></a>'
+                    + '&nbsp;&nbsp' +
+                    '<a href="#deleteCristal" name="delete" class="modal-trigger"><i class="mdi-action-delete"></i></a>'
+                }
+            ]
+        });
+
+        $('#data-table-cristal tbody').on('click', 'a', function () {
+            data = table.row($(this).parents('tr')).data();
+            name = $(this).attr('name');
+            $('.modal').modal();
+            id = 0;
+            if (name == 'update') {
+                // EDIT button
+                Materialize.updateTextFields();
+                $('#nombreCristal').val(data['nombre']);
+                $('#codigoCristal').val(data['codigo']);
+                $('#precioCristal').val(data['precio']);
+                $('#cantidadCristal').val(data['cantidad']);
+                $('#descripcionCristal').val(data['descripcion']);
+                $('#laboratorioCristal').prop('checked', data['laboratorio']);
+                $('#activoCristal').val(data['activo']);
+                initSucursalCristal(data['sucursal'].id);
+                initModeloCristal(data['modelo'].id);
+                initMaterialCristal(data['material_cristal'].id);
+                initColorCristal(data['color'].id);
+                initMedCerca(data['medicion_cerca']);
+                initMedLejos(data['medicion_lejos']);
+                loadTratamientos(data['tratamientos']);
+                $('#type-cristal').val('edit');
+                $('.modal-title').text('Editar ' + data['codigo']);
+
+            } else {
+                // DELETE button
+                $('.modal-title').text('Eliminar ' + data['nombre']);
+            }
+            id = data['id'];
+        });
+
+        $('#form-edit-cristal').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-cristal').val();
+            method = '';
+            url = '/api/cristalesgraduados/';
+            if (type == 'new') {
+                // new
+                method = 'POST';
+            } else {
+                // edit
+                url = url + id + '/';
+                method = 'PUT';
+            }
+            {#            console.log($this);#}
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#confirm').on('click', '#delete', function (e) {
+            $.ajax({
+                url: '/api/cristalesgraduados/' + id + '/',
+                method: 'DELETE',
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        {% comment %}
+                mediciones hice las de cerca solamente
+        {% endcomment %}
+
+
+        function initSucursalCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/sucursales",
+            }).done(function (data) {
+                $('.option-sucursal-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#sucursalcristalG').append($('<option>', {
+                        class: 'option-sucursal-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#sucursalcristalG').material_select('destroy');
+                $('#sucursalcristalG').val(val).change();
+                $('#sucursalcristalG').material_select();
+
+            });
+        }
+
+        function initModeloCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/modelo",
+            }).done(function (data) {
+                $('.option-modelo-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#modeloCristal').append($('<option>', {
+                        class: 'option-modelo-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#modeloCristal').material_select('destroy');
+                $('#modeloCristal').val(val).change();
+                $('#modeloCristal').material_select();
+            });
+        }
+
+        function initMaterialCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/materialcristal",
+            }).done(function (data) {
+                $('.option-material-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#materialCristal').append($('<option>', {
+                        class: 'option-material-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#materialCristal').material_select('destroy');
+                $('#materialCristal').val(val).change();
+                $('#materialCristal').material_select();
+            });
+        }
+
+        function initColorCristal(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/colores",
+            }).done(function (data) {
+                $('.option-color-cristal').remove();
+                $.each(data.results, function (k, v) {
+                    $('#colorCristal').append($('<option>', {
+                        class: 'option-color-cristal',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#colorCristal').material_select('destroy');
+                $('#colorCristal').val(val).change();
+                $('#colorCristal').material_select();
+            });
+        }
+
+        function initMedCerca(val) {
+            $('.option-med-cerca').remove();
+            $texto = 'esf:' + val.esfera + ' cil:' + val.cilindro + ' eje:' + val.eje + ' pris:' + val.prisma + ' alt:' + val.altura;
+            $('#medicion_cerca').append($('<option>', {
+                class: 'option-med-cerca',
+                value: val.id,
+                text: $texto
+            }));
+
+            $('#medicion_cerca').material_select('destroy');
+            $('#medicion_cerca').val(val.id).change();
+            $('#medicion_cerca').material_select();
+        }
+
+        function initMedLejos(val) {
+            $('.option-med-lejos').remove();
+            $texto = 'esf:' + val.esfera + ' cil:' + val.cilindro + ' eje:' + val.eje + ' pris:' + val.prisma + ' alt:' + val.altura;
+            $('#medicion_lejos').append($('<option>', {
+                class: 'option-med-lejos',
+                value: val.id,
+                text: $texto
+            }));
+
+            $('#medicion_lejos').material_select('destroy');
+            $('#medicion_lejos').val(val.id).change();
+            $('#medicion_lejos').material_select();
+        }
+
+        function loadTratamientos(tratamientos) {
+            var myConvertedData = {};
+            var myConvertedData2 = [];
+            $('.option-tratamientos').remove();
+            $.each(tratamientos, function (index, value) {
+                myConvertedData2[index] =
+                    {
+                        tag: value.nombre,
+                        id: value.id
+                    };
+                $('#SelectTratamientos').append('<option selected class="option-tratamientos" value="' + value.id + '"></option>')
+            });
+            $.ajax({
+                type: "GET",
+                url: "/api/tratamientocristal",
+            }).done(function (data) {
+                $.each(data.results, function (index, value) {
+                    myConvertedData[value.nombre + " "] = null;
+                });
+                $('.chips-autocomplete').material_chip({
+                    autocompleteOptions: {
+                        data: myConvertedData,
+                        limit: 5,
+                        minLength: 0
+                    },
+                    data: myConvertedData2
+                });
+
+                $('.chips').on('chip.add', function (e, chip) {
+                    // you have the added chip here
+                    {#                    $('.option-tratamientos').remove();#}
+                    $.each(data.results, function (index, value) {
+                        if (chip.tag == value.nombre) {
+                            chip.id = value.id;
+                            $('#SelectTratamientos').append('<option selected class="option-tratamientos" value="' + value.id + '"></option>')
+                        }
+                    });
+                    var data1 = $('.chips-autocomplete').material_chip('data');
+                    if (chip.id == undefined) {
+                        data1.splice(data1.length - 1, 1);
+                    }
+                    $('.chips-autocomplete').material_chip({
+                        data: data1,
+                        autocompleteOptions: {
+                            data: myConvertedData,
+                            limit: 5,
+                            minLength: 0
+                        }
+                    });
+                    //console.log(data1);
+                });
+                $('.chips').on('chip.delete', function (e, chip) {
+                    // you have the added chip here
+                    $('option.option-tratamientos[value="' + chip.id + '"]').remove();
+                });
+            });
+        }
+
+        <!--  SCRIPT MEDICION  -->
+        $('#medicion-cerca-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-medicion-cerca') {
+                $('#type-medicion').val('edit');
+                $('#distancia-medicion').val('cerca');
+                console.log($("#medicion_cerca").val());
+                $.ajax({
+                    type: "GET",
+                    url: "/api/medicion/" + $("#medicion_cerca").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#esfera').val(data['esfera']);
+                    $('#cilindro').val(data['cilindro']);
+                    $('#eje').val(data['eje']);
+                    $('#prisma').val(data['prisma']);
+                    $('#altura').val(data['altura']);
+                    $('#medicion-title').text('Editar medicion');
+                });
+            }
+            else {
+                $('#esfera').val(0);
+                $('#cilindro').val(0);
+                $('#eje').val(0);
+                $('#prisma').val(0);
+                $('#altura').val(0);
+                $('#type-medicion').val('new');
+                $('#distancia-medicion').val('cerca');
+                $('#medicion-title').text('Crear Medicion');
+            }
+        });
+
+        $('#medicion-lejos-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-medicion-lejos') {
+                $('#type-medicion').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/medicion/" + $("#medicion_lejos").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#esfera').val(data['esfera']);
+                    $('#cilindro').val(data['cilindro']);
+                    $('#eje').val(data['eje']);
+                    $('#prisma').val(data['prisma']);
+                    $('#altura').val(data['altura']);
+                    $('#distancia-medicion').val('lejos');
+                    $('#medicion-title').text('Editar medicion');
+                });
+            }
+            else {
+                $('#esfera').val(0);
+                $('#cilindro').val(0);
+                $('#eje').val(0);
+                $('#prisma').val(0);
+                $('#altura').val(0);
+                $('#type-medicion').val('new');
+                $('#distancia-medicion').val('lejos');
+                $('#medicion-title').text('Crear Medicion');
+            }
+        });
+
+        $('#form-edit-medicion').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-medicion').val();
+            method = '';
+            url = '/api/medicion/';
+            if (type == 'new') {
+                // new
+                method = 'POST';
+            } else {
+                // edit
+                url = url + id + '/';
+                method = 'PUT';
+            }
+            {#            console.log($this);#}
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                dist = $('#distancia-medicion').val();
+                if (dist == "cerca")
+                    initMedCerca(data);
+                else
+                    initMedLejos(data);
+                $('#addMedicion').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+        <!--  SCRIPT SUCURSAL  -->
+        $('#sucursal-cristalG-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-sucursal') {
+                $('#type-sucursal-cristalG').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/sucursales/" + $("#sucursalcristalG").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-sucursal-cristalG').val(data.nombre);
+                    $('#direccion-sucursal-cristalG').val(data.direccion);
+                });
+            }
+            else {
+                $('#nombre-sucursal-cristalG').val("");
+                $('#direccion-sucursal-cristalG').val("");
+            }
+        });
+
+        $('#form-sucursal-cristalG').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-sucursal-cristalG').val();
+            {#             alert("Entra aki");#}
+            method = 'POST';
+            url = '/api/sucursales/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/sucursales/' + $('#sucursalcristalG').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initSucursalCristal(data['id']);
+                $('#addSucursalcristalG').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        <!--  SCRIPT COLOR  -->
+        $('#color-cristalG-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-color') {
+                $('#type-color-cristalG').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/colores/" + $("#colorCristal").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-color-cristalG').val(data.nombre);
+                    $('#siglas-color-cristalG').val(data.siglas);
+                });
+            }
+            else {
+                $('#nombre-color-cristalG').val("");
+                $('#siglas-color-cristalG').val("");
+
+            }
+        });
+
+        $('#form-color-cristalG').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-color-cristalG').val();
+            method = 'POST';
+            url = '/api/color/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/colores/' + $('#colorCristal').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initColorCristal(data['id']);
+                $('#addColorCristalG').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+        <!--  SCRIPT MODELO  -->
+        $('#modelo-cristalG-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-modelo') {
+                $('#type-modelo-cristalG').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/modelo/" + $("#modeloCristal").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-modelo-cristalG').val(data.nombre);
+                    $('#siglas-modelo-cristalG').val(data.siglas);
+                    $('#descripcion-modelo-cristalG').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-modelo-cristalG').val("");
+                $('#siglas-modelo-cristalG').val("");
+                $('#descripcion-modelo-cristalG').val("");
+            }
+        });
+
+        $('#form-modelo-cristalG').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-modelo-cristalG').val();
+            method = 'POST';
+            url = '/api/modelo/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/modelo/' + $('#modeloCristal').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initModeloCristal(data['id']);
+                $('#addmodelocristalg').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+
+         <!--  SCRIPT Tipo Armadura  -->
+        $('#material-cristalG-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-MatCristal') {
+                $('#type-material-cristalG').val('edit');
+                {#                     alert("tipoarmazon " + $("#tipoarmGafa").val());#}
+                $.ajax({
+                    type: "GET",
+                    url: "/api/materialcristal/" + $("#materialCristal").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-material-cristalG').val(data.nombre);
+                    $('#descripcion-material-cristalG').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-material-cristalG').val("");
+                $('#descripcion-material-cristalG').val("");
+            }
+        });
+
+        $('#form-material-cristalG').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-material-cristalG').val();
+            method = 'POST';
+            url = '/api/materialcristal/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/materialcristal/' + $('#materialCristal').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMaterialCristal(data['id']);
+                $('#addmaterialcristalg').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+
+    });
+</script>

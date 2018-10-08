@@ -1,0 +1,643 @@
+<div id="table-datatables">
+    <div class="row">
+        <div class="col s12">
+            <table id="data-table-LenteC" class="responsive-table data-table-simple display" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Sucursal</th>
+                    <th>Precio</th>
+                    <th>Color</th>
+                    <th>Marca</th>
+                    <th>Gas Permeable</th>
+                    <th>Blando</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- NEW and EDIT Modal -->
+<div id="ModalEditLenteC" class="modal card-panel modal-fixed-footer" style="width: 90%">
+    <div class="modal-content">
+        <h4 class="modal-title center-align">Editar Lente de Contacto</h4>
+        <form id="form-edit-lenteC" role="form">
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="nombreLenteC">Nombre</label>
+                        <input type="text" class="form-control" id="nombreLenteC" name="nombre"
+                               placeholder="Escriba el nombre del lente de contacto"
+                               required="true">
+                        <input type="hidden" class="form-control" id="codigoLenteC" name="codigo"
+                               required="true">
+                        <input type="hidden" class="form-control" id="activoLenteC" name="activo"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <div class="col s10">
+                            <label for="sucursalLenteC">Sucursal</label>
+                            <select id="sucursalLenteC" name="sucursal">
+                            </select>
+                        </div>
+                        <div class="col s2" id="sucursal-lenteC-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button"
+                               name="update-sucursal"
+                               href="#addSucursallenteC">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-sucursal-LenteC"
+                               href="#addSucursallenteC">
+                                <i class="mdi-content-add"></i></a>
+                        </div>
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="precioLenteC">Precio</label>
+                        <input type="text" class="form-control" id="precioLenteC" name="precio"
+                               placeholder="Escriba el precio del Lente de Contacto"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4 left">
+                    <div class="col s10">
+                        <label for="colorLenteC">Color</label>
+                        <select id="colorLenteC" name="color">
+                        </select>
+                    </div>
+                    <div class="col s2">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-color-LenteC"
+                           href="#addColor">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-color-LenteC"
+                           href="#addColor">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+
+                <div class="col s4 m4">
+                    <div class="col s10">
+                        <label for="marcaLenteC">Marca</label>
+                        <select id="marcaLenteC" name="marca">
+                        </select>
+                    </div>
+                    <div class="col s2" id="marca-lenteC-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-marca"
+                           href="#addMarcalenteC">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-marca"
+                           href="#addMarcalenteC">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+
+                <div class="col s4 m4 right">
+                    <div class="col s6">
+                        <input type="checkbox" id="blandoLenteC" class="teal" name="blando" value="true" />
+                        <label for="blandoLenteC">Blando</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="checkbox" id="gas-permeable-LenteC" class="teal" name="gas_permeable" value="true"/>
+                        <label for="gas-permeable-LenteC">Gas Permeable</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4 left">
+                    <div class="col s10">
+                        <label for="medicionLenteC">Medición</label>
+                        <select id="medicionLenteC" name="medicion">
+                        </select>
+                    </div>
+                    <div class="col s2" id="medicion-div">
+                        <br><br>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="update-medicion"
+                           href="#addMedicionlenteC">
+                            <i class="mdi-editor-mode-edit"></i></a>
+                        <a class="btn-floating teal darken-2 modal-trigger" type="button" name="add-medicion"
+                           href="#addMedicionlenteC">
+                            <i class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="descripcionLenteC" name="descripcion" class="materialize-textarea"></textarea>
+                    <label for="descripcionLenteC">Descripcion</label>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type-cristal" name="type" value="">
+                    <button type="submit" class="btn btn-flat teal white-text modal-action modal-close rigth" href="!#">
+                        <i class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Delete Lente Contacto -->
+<div class="modal" id="deleteLenteContacto">
+    <div class="modal-content">
+        <h4 class="modal-title">Seguro desea eliminar</h4>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat " id="delete-LenteC">Eliminar</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-teal  btn-flat ">Cancelar</a>
+    </div>
+</div>
+
+
+<!--MODAL Add Sucursal Gafa Sol  -->
+<div id="addSucursallenteC" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir nueva Sucursal</h4>
+        <form id="form-sucursal-lenteC">
+            <div class="form-group">
+                <label for="nombre-sucursal-lenteC"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                <input type="text" class="form-control" id="nombre-sucursal-lenteC" name="nombre"
+                       placeholder="Escriba el nombre de la sucursal"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="direccion-sucursal-lenteC"><span class="glyphicon glyphicon-pencil"></span>
+                        Direccion</label>
+                    <input type="text" class="form-control" id="direccion-sucursal-lenteC" name="direccion"
+                           placeholder="Escriba la direccion de la sucursal"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type-sucursal-lenteC" name="type" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--MODAL Add Marca -->
+<div id="addMarcalenteC" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Añadir una nueva Marca</h4>
+        <form id="form-marca-lenteC">
+            <div class="form-group">
+                <label for="nombre-marca-lenteC">Nombre</label>
+                <input type="text" class="form-control" id="nombre-marca-lenteC" name="nombre"
+                       placeholder="Escriba la marca que desea añadir"
+                       required="true">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="descripcion-marca-lenteC"><span class="glyphicon glyphicon-pencil"></span>
+                        Descripción</label>
+                    <input type="text" class="form-control" id="descripcion-marca-lenteC" name="descripcion"
+                           placeholder="Escriba la descripción de la Marca"
+                           required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="siglas-marca-lenteC"><span class="glyphicon glyphicon-pencil"></span>
+                        Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-marca-lenteC" name="siglas"
+                           placeholder="Escriba las siglas de la Marca"
+                           required="true">
+                </div>
+            </div>
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="type" name="type-marca-lenteC" value="">
+                <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- NEW and EDIT Medicion -->
+<div id="addMedicionlenteC" class="modal card-panel modal-fixed-footer">
+    <div class="modal-content">
+        <h4 id="medicion-title" class="modal-title center-align">Editar Medicion</h4>
+        <form id="form-edit-medicion-lenteC" role="form">
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="esfera-lenteC">Esfera</label>
+                        <input type="number" class="form-control" id="esfera-lenteC" name="esfera"
+                               placeholder="Escriba el valor de la esfera"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="cilindro-lenteC">Cilindro</label>
+                        <input type="number" class="form-control" id="cilindro-lenteC" name="cilindro"
+                               placeholder="Escriba el valor del cilindro"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="eje-lenteC">Eje</label>
+                        <input type="number" class="form-control" id="eje-lenteC" name="eje"
+                               placeholder="Escriba el valor del eje"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="prisma-lenteC">Prisma</label>
+                        <input type="number" class="form-control" id="prisma-lenteC" name="prisma"
+                               placeholder="Escriba el valor del prisma"
+                               required="true">
+                    </div>
+                    <div class="col s4 m4">
+                        <br>
+                        <label for="altura-lenteC">Altura</label>
+                        <input type="number" class="form-control" id="altura-lenteC" name="altura"
+                               placeholder="Escriba el valor de la altura"
+                               required="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="width: 94%; z-index: 2;">
+                <input type="hidden" id="distancia-medicion-lenteC" name="type" value="">
+                <input type="hidden" id="type-medicion-lenteC" name="type" value="">
+                <button type="submit" class="btn btn-flat teal white-text modal-action modal-close" href="!#"><i
+                        class="mdi-content-send"></i> Aceptar
+                </button>
+                <button class="btn btn-flat teal white-text modal-close left"><i
+                        class="mdi-content-clear"></i> Cancelar
+                </button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        table = $("#data-table-LenteC").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/lentescontacto/",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "codigo"},
+                {"data": "nombre"},
+                {"data": "sucursal.nombre"},
+                {"data": "precio"},
+                {"data": "color.nombre"},
+                {"data": "marca.nombre"},
+                {
+                    "data": function (row, type, val, meta) {
+                        if (row.gas_permeable)
+                            return '<i class="mdi-action-done"></i>';
+                        return '<i class="mdi-content-clear"></i>';
+                    }
+                },
+                {
+                    "data": function (row, type, val, meta) {
+                        if (row.blando)
+                            return '<i class="mdi-action-done"></i>';
+                        return '<i class="mdi-content-clear"></i>';
+                    }
+                },
+
+                {"data": "cantidad"},
+                {
+                    "data": null,
+                    "defaultContent": '<a href="#ModalEditLenteC" name="update" class="modal-trigger"><i class="mdi-content-create"></i></a>'
+                    + '&nbsp;&nbsp' +
+                    '<a href="#deleteLenteContacto" name="delete" class="modal-trigger"><i class="mdi-action-delete"></i></a>'
+                }
+            ]
+        });
+
+        $('#data-table-LenteC tbody').on('click', 'a', function () {
+            data = table.row($(this).parents('tr')).data();
+            name = $(this).attr('name');
+            $('.modal').modal();
+            id = 0;
+            if (name == 'update') {
+                // EDIT button
+                Materialize.updateTextFields();
+                $('#nombreLenteC').val(data['nombre']);
+                $('#codigoLenteC').val(data['codigo']);
+                $('#precioLenteC').val(data['precio']);
+                $('#cantidadLenteC').val(data['cantidad']);
+                $('#descripcionLenteC').val(data['descripcion']);
+
+                $('#blandoLenteC').prop('checked', data['gas-permeable']);
+                $('#gas-permeable-LenteC').prop('checked', data['gas-permeable']);
+                $('#activoLenteC').val(data['activo']);
+
+
+                initSucursalLenteC(data['sucursal'].id);
+                initMarcaLenteC(data['marca'].id);
+                initColorLenteC(data['color'].id);
+                initMedLenteC(data['medicion']);
+
+
+                $('#type-LenteC').val('edit');
+                $('.modal-title').text('Editar ' + data['codigo']);
+
+            } else {
+                // DELETE button
+                $('.modal-title').text('Eliminar ' + data['nombre']);
+
+            }
+            {#                $('.modal').modal();#}
+            id = data['id'];
+        });
+
+        $('#form-edit-lenteC').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = '';
+            url = '/api/lentescontacto/';
+            if (type == 'new') {
+                // new
+                method = 'POST';
+            } else {
+                // edit
+                url = url + id + '/';
+                method = 'PUT';
+            }
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize()
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#deleteLenteContacto').on('click', '#delete', function (e) {
+            alert("delete alert");
+            $.ajax({
+                url: '/api/lentescontacto/' + id + '/',
+                method: 'DELETE'
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        function initSucursalLenteC(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/sucursales",
+            }).done(function (data) {
+                $('.option-sucursal-LenteC').remove();
+                $.each(data.results, function (k, v) {
+                    $('#sucursalLenteC').append($('<option>', {
+                        class: 'option-sucursal-LenteC',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#sucursalLenteC').material_select('destroy');
+                $('#sucursalLenteC').val(val).change();
+                $('#sucursalLenteC').material_select();
+
+            });
+        }
+
+        function initMarcaLenteC(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/marca",
+            }).done(function (data) {
+                $('.option-marca-LenteC').remove();
+                $.each(data.results, function (k, v) {
+                    $('#marcaLenteC').append($('<option>', {
+                        class: 'option-marca-LenteC',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#marcaLenteC').material_select('destroy');
+                $('#marcaLenteC').val(val).change();
+                $('#marcaLenteC').material_select();
+            });
+        }
+
+        function initColorLenteC(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/colores",
+            }).done(function (data) {
+                $('.option-color-LenteC').remove();
+                $.each(data.results, function (k, v) {
+                    $('#colorLenteC').append($('<option>', {
+                        class: 'option-color-LenteC',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#colorLenteC').material_select('destroy');
+                $('#colorLenteC').val(val).change();
+                $('#colorLenteC').material_select();
+            });
+        }
+
+        function initMedLenteC(val) {
+            $('.option-med-LenteC').remove();
+            $texto = 'esf:' + val.esfera + ' cil:' + val.cilindro + ' eje:' + val.eje + ' pris:' + val.prisma + ' alt:' + val.altura;
+            $('#medicionLenteC').append($('<option>', {
+                class: 'option-med-LenteC',
+                value: val.id,
+                text: $texto
+            }));
+
+            $('#medicionLenteC').material_select('destroy');
+            $('#medicionLenteC').val(val.id).change();
+            $('#medicionLenteC').material_select();
+        }
+
+
+        <!--  SCRIPT SUCURSAL  -->
+        $('#sucursal-lenteC-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-sucursal') {
+                $('#type-sucursal-lenteC').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/sucursales/" + $("#sucursalLenteC").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-sucursal-lenteC').val(data.nombre);
+                    $('#direccion-sucursal-lenteC').val(data.direccion);
+                });
+            }
+            else {
+                $('#nombre-sucursal-lenteC').val("");
+                $('#direccion-sucursal-lenteC').val("");
+            }
+        });
+
+        $('#form-sucursal-lenteC').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-sucursal-lenteC').val();
+            {#             alert("Entra aki");#}
+            method = 'POST';
+            url = '/api/sucursales/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/sucursales/' + $('#sucursalLenteC').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initSucursalLenteC(data['id']);
+                $('#addSucursallenteC').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        <!--  SCRIPT MARCA  -->
+        $('#marca-lenteC-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-marca') {
+                $('#type-marca-lenteC').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/marca/" + $("#marcaLenteC").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-marca-lenteC').val(data.nombre);
+                    $('#siglas-marca-lenteC').val(data.siglas);
+                    $('#descripcion-marca-lenteC').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-marca-lenteC').val("");
+                $('#siglas-marca-lenteC').val("");
+                $('#descripcion-marca-lenteC').val("");
+            }
+        });
+
+        $('#form-marca-lenteC').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-marca-lenteC').val();
+            method = 'POST';
+            url = '/api/marca/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/marca/' + $('#marcaLenteC').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMarcaLenteC(data['id']);
+                $('#addmarcalentec').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        <!--  SCRIPT MEDICION  -->
+        $('#medicion-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-medicion') {
+                $('#type-medicion-lenteC').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/medicion/" + $("#medicionLenteC").val() + "/",
+                }).done(function (data) {
+                    Materialize.updateTextFields();
+                    $('#esfera-lenteC').val(data['esfera']);
+                    $('#cilindro-lenteC').val(data['cilindro']);
+                    $('#eje-lenteC').val(data['eje']);
+                    $('#prisma-lenteC').val(data['prisma']);
+                    $('#altura-lenteC').val(data['altura']);
+                    $('#distancia-medicion-lenteC').val('lejos');
+                    $('#medicion-title').text('Editar medicion');
+                });
+            }
+            else {
+                $('#esfera-lenteC').val(0);
+                $('#cilindro-lenteC').val(0);
+                $('#eje-lenteC').val(0);
+                $('#prisma-lenteC').val(0);
+                $('#altura-lenteC').val(0);
+                $('#type-medicion-lenteC').val('new');
+                $('#distancia-medicion-lenteC').val('lejos');
+                $('#medicion-title').text('Crear Medicion');
+            }
+        });
+
+        $('#form-edit-medicion-lenteC').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type-medicion-lenteC').val();
+            method = '';
+            url = '/api/medicion/';
+            if (type == 'new') {
+                // new
+                method = 'POST';
+            } else {
+                // edit
+                url = url + +$('#medicionLenteC').val() + '/';
+                method = 'PUT';
+            }
+            {#            console.log($this);#}
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMedLenteC(data);
+                $('#addMedicionlenteC').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+    });
+</script>

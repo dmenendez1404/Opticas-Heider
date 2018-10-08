@@ -1,0 +1,891 @@
+{% extends 'base.html' %}
+
+
+{% block Cabecera %}
+    <h5 class="breadcrumbs-title">Adicionar Compra</h5>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="index.html">Compra</a></li>
+    <li class="active">Adicionar Compra</li>
+{% endblock %}
+
+{% block content %}
+    <!--DataTables example-->
+    <div class="container">
+        <form id="form-add-compra" role="form">
+            <div class="row">
+                <input type="hidden" class="form-control" id="subtotal" name="subtotal"
+                       required="true">
+                <input type="hidden" class="form-control" id="total" name="total"
+                       required="true">
+                <div class="col s4 m4 left">
+                    <div class="col s12">
+
+                        <select id="proveedor" name="proveedor">
+                            <option value="" disabled selected>Seleccione un Proveedor</option>
+                        </select>
+                        <label for="proveedor">Proveedor</label>
+                    </div>
+                </div>
+                <div class="col s4 m4 ">
+                    <div class="col s10">
+                        <label for="sucursal">Sucursal</label>
+                        <select id="sucursal" name="sucursal">
+                            <option value="" disabled selected>Seleccione una Sucursal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col s4 m4 right">
+                    <div class="col s12">
+                        <label for="fecha">Fecha</label>
+                        <br><br>
+                        <input type="text" name="fecha" id="fecha" class="datepicker" required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m5">
+                <div class="card-panel ">
+                    <span class="row">
+                        <div class="col s4">
+                            <br>
+                            <label for="articulo"><span class="glyphicon glyphicon-pencil"></span>Artículo</label>
+                            <div class="autocomplete" id="articulo_autocomplete">
+                                <input type="text" id="articulo_input" class="autocomplete">
+                                 <input type="hidden" id="articulo" name="articulo" class="autocomplete">
+                            </div>
+                        </div>
+                        <div class="col s1" id="articulos-div">
+                            <br><br>
+                            <a class="btn-floating teal darken-2 modal-trigger"
+                               href="#editArticulos" type="button"
+                               name="update-articulos">
+                                <i class="mdi-editor-mode-edit"></i></a>
+                            <a class="btn-floating teal darken-2 modal-trigger" href="#addArticulos"
+                               type="button"
+                               name="add-articulos"><i
+                                    class="mdi-content-add"></i></a>
+                        </div>
+                        <div class="col s3 m3" id="precio_div" style="display: none">
+                            <br>
+                            <label for="precio_div">Precio</label>
+                            <input type="number" class="form-control" id="precio" name="precio"
+                                   placeholder="Introduzca el precio"
+                                   required="true">
+                        </div>
+                        <div class="col s3 m3" id="descuento_div" style="display: none">
+                            <br>
+                            <label for="descuento_div">% de descuento</label>
+                            <input type="number" class="form-control" id="descuento"
+                                   name="descuento"
+                                   placeholder="Introduzca el % de descuento"
+                                   required="true">
+                        </div>
+                        <a id="add" class="btn-floating btn-large red right" type="submit"><i
+                                class="mdi-content-add"></i></a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <table id="carrito" class="bordered responsive-table">
+                    <thead>
+                    <th>No.</th>
+                    <th style="width: 50%"> Artículo</th>
+                    <th>No. Receta</th>
+                    <th>Unidades</th>
+                    <th>Costo</th>
+                    </thead>
+
+                    <tbody id="content-carrito">
+
+                    </tbody>
+
+                    <tfoot>
+                    <th><p>Subtotal:</p></th>
+                    <th style="width: 50%"></th>
+                    <th></th>
+                    <th></th>
+                    <th><p id="subtotalCosto">$0</p></th>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col s4 m4">
+                    <label class="range-field"> % de Descuento
+                        <input type="range" class="form-control" id="descuento" name="descuento" value="0"
+                               min="0"
+                               max="100"/>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4 m4">
+                    Costo Total:
+                    </label>
+                    <p id="costoTotal">$0</p>
+                </div>
+            </div>
+            <div class="fixed-action-btn">
+                <a id="submit" class="btn-floating btn-large red right" type="submit"><i
+                        class="mdi-content-send"></i></a>
+            </div>
+        </form>
+
+
+        <!-- Add Sucursal -->
+        <div id="addArticulos" class="modal card-panel modal-fixed-footer">
+                </div>
+
+
+    <div id="addLente" class="modal card-panel modal-fixed-footer" style="width: 90%">
+
+    </div>
+
+    <!-- Add Sucursal -->
+    <div id="addSucursal" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir nueva Sucursal</h4>
+            <form id="form-sucursal">
+                <div class="form-group">
+                    <label for="nombre-sucursal"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-sucursal" name="nombre"
+                           placeholder="Escriba el nombre de la sucursal"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="direccion-sucursal"><span class="glyphicon glyphicon-pencil"></span>
+                            Direccion</label>
+                        <input type="text" class="form-control" id="direccion-sucursal" name="direccion"
+                               placeholder="Escriba la direccion de la sucursal"
+                               required="true">
+                    </div>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Tipo Armazon -->
+    <div id="addTipoArmazon" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir un nuevo tipo de armazon</h4>
+            <form id="form-tipo-armazon">
+                <div class="form-group">
+                    <label for="nombre-armadura"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-armadura" name="nombre"
+                           placeholder="Escriba el nombre del tipo de armazon"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="descripcion-armadura"><span class="glyphicon glyphicon-pencil"></span>
+                            Descripcion</label>
+                        <input type="text" class="form-control" id="descripcion-armadura" name="descripcion"
+                               placeholder="Escriba la descripcion del tipo de armazon"
+                               required="true">
+                    </div>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Color -->
+    <div id="addColor" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir un nuevo Color</h4>
+            <form id="form-color">
+                <div class="form-group">
+                    <label for="nombre-color"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-color" name="nombre"
+                           placeholder="Escriba el color que desea añadir"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <label for="siglas-color"><span class="glyphicon glyphicon-pencil"></span> Abreviaturas</label>
+                    <input type="text" class="form-control" id="siglas-color" name="siglas"
+                           placeholder="Escriba las abrevaituras del color"
+                           required="true">
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Marca -->
+    <div id="addMarca" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir una nueva Marca</h4>
+            <form id="form-marca">
+                <div class="form-group">
+                    <label for="nombre-marca"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-marca" name="nombre"
+                           placeholder="Escriba la marca que desea añadir"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="descripcion-marca"><span class="glyphicon glyphicon-pencil"></span>
+                            Descripción</label>
+                        <input type="text" class="form-control" id="descripcion-marca" name="descripcion"
+                               placeholder="Escriba la descripción de la Marca"
+                               required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="siglas-marca"><span class="glyphicon glyphicon-pencil"></span>
+                            Abreviaturas</label>
+                        <input type="text" class="form-control" id="siglas-marca" name="siglas"
+                               placeholder="Escriba la descripción de la Marca"
+                               required="true">
+                    </div>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add tipo Montura -->
+    <div id="addTipoMontura" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir un nuevo tipo de montura</h4>
+            <form id="form-tipo-montura">
+                <div class="form-group">
+                    <label for="nombre-montura"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-montura" name="nombre"
+                           placeholder="Escriba el tipo de montura que desea añadir"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="descripcion-montura"><span class="glyphicon glyphicon-pencil"></span>
+                            Descripción</label>
+                        <input type="text" class="form-control" id="descripcion-montura" name="descripcion"
+                               placeholder="Escriba la descripción del tipo de montura"
+                               required="true">
+                    </div>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Material Armadura -->
+    <div id="addMaterialArmadura" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir un nuevo Material de Armadura</h4>
+            <form id="form-material-armadura">
+                <div class="form-group">
+                    <label for="nombre-material"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-material" name="nombre"
+                           placeholder="Escriba el tipo de montura que desea añadir"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="descripcion-material"><span class="glyphicon glyphicon-pencil"></span>
+                            Descripción</label>
+                        <input type="text" class="form-control" id="descripcion-material" name="descripcion"
+                               placeholder="Escriba la descripción del material de armadura"
+                               required="true">
+                    </div>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Cristal -->
+    <div id="addCristal" class="modal card-panel modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Añadir un nuevo Cristal Graduado</h4>
+            <form id="form-cristal">
+                <div class="form-group">
+                    <label for="Nombre"><span class="glyphicon glyphicon-pencil"></span> Nombre</label>
+                    <input type="text" class="form-control" id="nombre-cristal" name="nombre"
+                           placeholder="Escriba el nombre del lente"
+                           required="true">
+                </div>
+                <div class="form-group row">
+                    <div>
+                        <label for="sucursal"><span class="glyphicon glyphicon-pencil"></span>
+                            Sucursal</label>
+                        <select id="sucursal-cristal" name="sucursal">
+                        </select>
+                        <a class="btn-floating teal darken-2 modal-trigger" href="#addSucursal"><i
+                                class="mdi-content-add"></i></a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo"><span class="glyphicon glyphicon-pencil"></span> codigo</label>
+                    <input type="text" class="form-control" id="codigo-cristal" name="codigo"
+                           placeholder="Escriba el codigo del lente"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion"><span class="glyphicon glyphicon-pencil"></span> descripcion</label>
+                    <input type="text" class="form-control" id="descripcion-cristal" name="descripcion"
+                           placeholder="Escriba la descripcion del lente"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <label for="precio"><span class="glyphicon glyphicon-pencil"></span> precio</label>
+                    <input type="text" class="form-control" id="precio-cristal" name="precio"
+                           placeholder="Escriba el precio del lente"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad"><span class="glyphicon glyphicon-pencil"></span> Cantidad</label>
+                    <input type="text" class="form-control" id="cantidad-cristal" name="cantidad"
+                           placeholder="Escriba la cantidad de lentes"
+                           required="true">
+                </div>
+                <div class="form-group">
+                    <label for="tipo_armazon"><span class="glyphicon glyphicon-pencil"></span> tipo de
+                        Armazon</label>
+                    <select id="tipo_armazon" name="tipo_armazon">
+                    </select>
+                    <a class="btn-floating teal darken-2 modal-trigger" href="#addTipoArmazon"><i
+                            class="mdi-content-add"></i></a>
+                </div>
+                <div class="form-group">
+                    <label for="color"><span class="glyphicon glyphicon-pencil"></span> Color</label>
+                    <select id="color-cristal" name="color">
+                    </select>
+                    <a class="btn-floating teal darken-2 modal-trigger" href="#addColor"><i
+                            class="mdi-content-add"></i></a>
+                </div>
+                <div class="modal-footer" style="width: 94%; z-index: 2;">
+                    <input type="hidden" id="type" name="type" value="">
+                    <button href="#!" type="submit" class="btn btn-flat teal white-text modal-action modal-close"><i
+                            class="mdi-content-send"></i> Aceptar
+                    </button>
+                    <button type="button" class="btn btn-flat teal white-text modal-close left"><i
+                            class="mdi-content-clear"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "js/initSelects.js" %}"></script>
+
+     <script type="text/javascript" src="{% static "js/jquery-1.11.2.min.js" %}"></script>
+    <!--materialize js-->
+    <script type="text/javascript" src="{% static "js/materialize/dist/js/materialize.js" %}"></script>
+    <!--prism-->
+    <script type="text/javascript" src="{% static "js/prism.js" %}"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="{% static "js/plugins/perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+    <!-- chartist -->
+    <script type="text/javascript" src="{% static "js/plugins/chartist-js/chartist.min.js" %}"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="{% static "js/DjangoAjax.js" %}"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="{% static "js/plugins.js" %}"></script>
+    <script>
+
+        initSucursal();
+        initCliente();
+        loadArticulo();
+        // loadRecetas();
+        subtotal = 0;
+        total = 0;
+        descuento = 0;
+
+        $('.modal').modal();
+        $('#addLente').load('/addLente');
+        $('#cliente').on('change', function () {
+            loadRecetas($(this).val());
+        });
+
+
+        $('#addArticulos').load("{% url 'addLente' %}");
+
+        function addArticulo(articulo) {
+            count = $('#content-carrito tr').length + 1;
+            $('#content-carrito').append("<tr id='" + articulo.id + "' class='item'>" +
+                "<td>" + count +
+                "<td >" + articulo.codigo +
+                "<td>No receta" +
+                "<td> <input style = 'width:50px' type='number' " +
+                " class='cantidad-item' id='cant " + articulo.id + "'value=1 oldValue=1 />" +
+                "<td data='" + articulo.precio + "'>" + articulo.precio +
+                "</tr>");
+            addSubtotal(articulo.precio);
+        }
+
+        $(document).on('change', '.cantidad-item', function () {
+            diferencia = $(this).val() - $(this).attr('oldValue');
+            $(this).attr('oldValue', $(this).val());
+            tr = $(this).parents('tr');
+            costo = parseFloat(tr.children().eq(4).attr('data'));
+            costoItem = $(this).val() * costo;
+            tr.children().eq(4).html(String(costoItem));
+            addSubtotal(diferencia * costo);
+        });
+
+        function initArticulos(val) {
+            $.ajax({
+                type: "GET",
+                url: "/api/articulo",
+            }).done(function (data) {
+                $('.option-articulo').remove();
+                $.each(data.results, function (k, v) {
+                    $('#materialCristal').append($('<option>', {
+                        class: 'option-articulo',
+                        value: v.id,
+                        text: v.nombre
+                    }));
+                });
+                $('#articulo').material_select('destroy');
+                $('#articulo').val(val).change();
+                $('#articulo').material_select();
+            });
+        }
+
+        function addSubtotal(val) {
+            subtotal += val;
+            $('#subtotalCosto').text("$" + subtotal);
+            total = subtotal - ((descuento * subtotal) / 100);
+            $('#costoTotal').text("$" + total);
+        }
+
+        $('#descuento').on('change', function (e) {
+            changeDescuento();
+        });
+
+        function changeDescuento() {
+            descuento = $('#descuento').val();
+            total = subtotal - ((descuento * subtotal) / 100);
+            $('#costoTotal').text("$" + total);
+        }
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+
+        function loadArticulo(articulo) {
+            var myConvertedData = [];
+            var myConvertedData2 = [];
+            $.ajax({
+                type: "GET",
+                url: "/api/articulo/",
+            }).done(function (data) {
+                $.each(data.results, function (index, value) {
+                    myConvertedData[value.codigo] = null;
+                    myConvertedData2[value.codigo] =
+                        {
+                            tag: value.codigo,
+                            id: value.id
+                        };
+                });
+                //console.log(myConvertedData2);
+                $('#articulo_input').autocomplete({
+                    data: myConvertedData,
+                    minLength: 0,
+                    onAutocomplete: function (val) {
+                        $('#articulo').val(myConvertedData2[val].id);
+                        $('#precio_div').css('display', 'block');
+                        $('#descuento_div').css('display', 'block');
+                    },
+                });
+                if (articulo) {
+                    $('#articulo').val(articulo.codigo);
+                    $('#articulo_input').val(articulo.codigo);
+                } else {
+                    $('#articulo').val("");
+                    $('#articulo_input').val("");
+                }
+            });
+        }
+
+        $('#articulo_input').on('change', function () {
+            text = $('#articulo_input').text();
+            console.log(text);
+            if (text == "") {
+                $('#precio_div').setText('');
+                $('#descuento_div').setText('');
+                $('#precio_div').css('display', 'none');
+                $('#descuento_div').css('display', 'none');
+            }
+        });
+
+        $('#submit').on('click', function () {
+            $('#total').val(total);
+            $('#subtotal').val(subtotal);
+            $.ajax({
+                url: '/api/venta/',
+                type: 'POST',
+                data: $('#form-add-venta').serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                $.each(data.articulos, function (index, value) {
+                    cant = parseInt($('#' + value).children().eq(3).children().eq(0).val());
+                    $.ajax({
+                        url: '/api/articulo/' + value + '/',
+                        type: 'GET',
+                    }).success(function (data, textStatus, jqXHR) {
+                        $.ajax({
+                            url: '/api/articulo/' + data.id + '/',
+                            type: 'PATCH',
+                            data: {'cantidad': data.cantidad - cant},
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    });
+                });
+                $.each(data.recetas, function (index, value) {
+                    $.ajax({
+                        url: '/api/receta/' + value + '/',
+                        type: 'GET',
+                    }).success(function (data, textStatus, jqXHR) {
+                        $.ajax({
+                            url: '/api/receta/' + data.id + '/',
+                            type: 'PATCH',
+                            data: {'atendida': 'True'},
+                        }).error(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR)
+                        });
+                    });
+                });
+            });
+        });
+
+        $('#addLentesButton').on('click', function () {
+            initSucursal();
+            initTipoMontura();
+            initMaterialArmadura();
+            initColor();
+            initMarca();
+            initTipo_Armazon();
+            initCristalIzq();
+            initCristalDer();
+        });
+
+        $('#form-edit-lente').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = 'POST';
+            url = '/api/lentes/';
+            console.log($this.serialize());
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                table.ajax.reload();
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#sucursal-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-sucursal') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/sucursales/" + $("#sucursal").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-sucursal').val(data.nombre);
+                    $('#direccion-sucursal').val(data.direccion);
+                });
+            }
+            else {
+                $('#nombre-sucursal').val("");
+                $('#direccion-sucursal').val("");
+            }
+        });
+
+        $('#form-sucursal').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = 'POST';
+            url = '/api/sucursales/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/sucursales/' + $('#sucursal').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initSucursal(data['id']);
+                $('#addSucursal').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#tipo-armazon-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-tipo-armazon') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tipoarmadura/" + $("#tipo_armazon").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-armadura').val(data.nombre);
+                    $('#descripcion-armadura').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-armadura').val("");
+                $('#descripcion-armadura').val("");
+            }
+        });
+
+        $('#form-tipo-armazon').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = 'POST';
+            url = '/api/tipoarmadura/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/tipoarmadura/' + $('#tipo_armazon').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initTipo_Armazon(data['id']);
+                $('#addTipoArmazon').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#tipo-montura-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-tipo-montura') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/tipomontura/" + $("#tipo_montura").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-montura').val(data.nombre);
+                    $('#descripcion-montura').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-montura').val("");
+                $('#descripcion-montura').val("");
+            }
+        });
+
+        $('#form-tipo-montura').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = 'POST';
+            url = '/api/tipomontura/';
+            $('#type').val('edit');
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/tipomontura/' + $('#tipo_montura').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initTipoMontura(data['id']);
+                $('#addTipoMontura').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#marca-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-marca') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/marca/" + $("#marca").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-marca').val(data.nombre);
+                    $('#descripcion-marca').val(data.descripcion);
+                    $('#siglas-marca').val(data.siglas);
+                });
+            }
+            else {
+                $('#nombre-marca').val("");
+                $('#descripcion-marca').val("");
+                $('#siglas-marca').val(data.siglas);
+            }
+        });
+
+        $('#form-marca').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            method = 'POST';
+            type = $('#type').val();
+            url = '/api/marca/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/marca/' + $('#marca').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMarca(data['id']);
+                $('#addMarca').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#material-armadura-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-material-armadura') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/materialarmadura/" + $("#material_armadura").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-material').val(data.nombre);
+                    $('#descripcion-material').val(data.descripcion);
+                });
+            }
+            else {
+                $('#nombre-material').val("");
+                $('#descripcion-material').val("");
+            }
+        });
+
+        $('#form-material-armadura').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            type = $('#type').val();
+            method = 'POST';
+            url = '/api/materialarmadura/';
+            if (type == 'edit') {
+                method = 'PUT';
+                url = '/api/materialarmadura/' + $('#material_armadura').val() + '/';
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initMaterialArmadura(data['id']);
+                $('#addMaterialArmadura').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+        $('#color-div').on('click', 'a', function () {
+            name = $(this).attr('name');
+            if (name == 'update-color') {
+                $('#type').val('edit');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/colores/" + $("#color").val() + "/",
+                }).done(function (data) {
+                    $('#nombre-color').val(data.nombre);
+                    $('#siglas-color').val(data.siglas);
+                });
+            }
+            else {
+                $('#nombre-color').val("");
+                $('#descripcion-color').val("");
+            }
+        });
+
+        $('#form-color').on('submit', function (e) {
+            e.preventDefault();
+            $this = $(this);
+            method = 'POST';
+            url = '/api/colores/';
+            type = $('#type').val();
+            if (type = 'edit') {
+                method = 'PUT';
+                url = "/api/colores/" + $("#color").val() + "/";
+            }
+            $.ajax({
+                url: url,
+                type: method,
+                data: $this.serialize(),
+            }).success(function (data, textStatus, jqXHR) {
+                initColor(data['id']);
+                $('#addColor').modal('close');
+            }).error(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+            });
+        });
+
+    </script>
+
+
+
+
+{% endblock %}
